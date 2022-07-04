@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "262863360105",
+    "project_id": "numbergame-1e3f7",
+    "storage_bucket": "numbergame-1e3f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262863360105:android:49f9561bdcc2bbe9c312f8",
+        "android_client_info": {
+          "package_name": "com.example.numbergame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262863360105-g6gapmb7hpsgvlrg12s1h0vtv40okhdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSwtZiMVGphVIbUUK8f5volnJJ-550DJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262863360105-g6gapmb7hpsgvlrg12s1h0vtv40okhdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
