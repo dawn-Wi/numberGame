@@ -10,8 +10,15 @@ public class LoginViewModel extends ViewModel {
     private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
 
     public void tryRegister(String id, String password, String displayname){
+        doingWork.setValue(true);
         userRepository.tryRegister(id, password,displayname,result->{
-
+            if(result.equals("Success")){
+                registerSuccess.postValue(true);
+            }
+            else{
+                registerSuccess.postValue(false);
+            }
+            doingWork.postValue(false);
         });
     }
 

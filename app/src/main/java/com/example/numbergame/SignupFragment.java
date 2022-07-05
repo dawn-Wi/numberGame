@@ -70,12 +70,15 @@ public class SignupFragment extends Fragment {
                     returnValue = true;
                 }
                 if(returnValue == false) {
-                    Toast.makeText(getActivity().getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Email format is wrong", Toast.LENGTH_SHORT).show();
+                    signup_et_email.setText(null);
+                    signup_et_password.setText(null);
                 }
                 //password에 4글자 이상인지
                 else if(signup_et_password.getText().toString().trim().length() < 4) {
                     //실패
-                    Toast.makeText(getActivity().getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Password is too short", Toast.LENGTH_SHORT).show();
+                    signup_et_password.setText(null);
                 }
                 else{
                     loginViewModel.tryRegister(signup_et_email.getText().toString(),signup_et_password.getText().toString(), signup_et_displayname.getText().toString());
@@ -88,6 +91,7 @@ public class SignupFragment extends Fragment {
             @Override
             public void onChanged(Boolean registersuccessing) {
                 if(registersuccessing){
+                    Toast.makeText(getActivity().getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
                     NavHostFragment.findNavController(SignupFragment.this).navigate(R.id.action_signupFragment_to_loginFragment);
                 }
                 else{
