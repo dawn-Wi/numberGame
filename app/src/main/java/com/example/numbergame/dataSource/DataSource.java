@@ -1,4 +1,7 @@
-package com.example.numbergame;
+package com.example.numbergame.dataSource;
+
+import com.example.numbergame.GameRecord;
+import com.example.numbergame.Result;
 
 public interface DataSource {
     void tryRegister(String id, String password, String displayName, DataSourceCallback<Result> callback);

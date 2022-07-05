@@ -1,4 +1,4 @@
-package com.example.numbergame;
+package com.example.numbergame.dataSource;
 
 public interface DataSourceCallback<Result> {
     void onComplete(Result result);

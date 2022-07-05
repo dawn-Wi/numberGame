@@ -1,4 +1,4 @@
-package com.example.numbergame;
+package com.example.numbergame.login;
 
 import android.os.Bundle;
 
@@ -13,12 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.numbergame.dataSource.FirebaseDataSource;
+import com.example.numbergame.R;
+import com.example.numbergame.UserRepository;
+
 public class LoginFragment extends Fragment {
-    LoginViewModel loginViewModel;
-    EditText login_et_email;
-    EditText login_et_password;
-    Button login_bt_login;
-    Button login_bt_signup;
+    private LoginViewModel loginViewModel;
+    private EditText et_email;
+    private EditText et_password;
+    private Button bt_login;
+    private Button bt_signup;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -43,12 +47,12 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        login_et_email = view.findViewById(R.id.login_et_email);
-        login_et_password =view.findViewById(R.id.login_et_password);
-        login_bt_login = view.findViewById(R.id.login_bt_login);
-        login_bt_signup = view.findViewById(R.id.login_bt_signup);
+        et_email = view.findViewById(R.id.login_et_email);
+        et_password =view.findViewById(R.id.login_et_password);
+        bt_login = view.findViewById(R.id.login_bt_login);
+        bt_signup = view.findViewById(R.id.login_bt_signup);
 
-        login_bt_signup.setOnClickListener(new View.OnClickListener() {
+        bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_signupFragment);

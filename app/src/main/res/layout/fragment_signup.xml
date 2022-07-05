@@ -5,7 +5,16 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupFragment">
+    tools:context=".login.SignupFragment">
+
+    <TextView
+        android:id="@+id/signup_tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/signup_et_email"
+        app:layout_constraintStart_toStartOf="@+id/signup_et_email" />
 
     <EditText
         android:id="@+id/signup_et_email"
@@ -19,6 +28,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/signup_tv_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/signup_et_password"
+        app:layout_constraintStart_toStartOf="@+id/signup_et_password" />
 
     <EditText
         android:id="@+id/signup_et_password"
@@ -34,6 +52,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signup_et_email" />
 
+    <TextView
+        android:id="@+id/signup_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/signup_et_displayName"
+        app:layout_constraintStart_toStartOf="@+id/signup_et_displayName" />
 
     <EditText
         android:id="@+id/signup_et_displayName"
@@ -50,15 +76,19 @@
         app:layout_constraintTop_toBottomOf="@+id/signup_et_password" />
 
     <Button
-        android:id="@+id/signup_bt_go"
+        android:id="@+id/signup_bt_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Sign up"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signup_et_displayName"
         app:layout_constraintVertical_bias="0.500" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

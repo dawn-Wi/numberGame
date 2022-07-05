@@ -1,9 +1,13 @@
-package com.example.numbergame;
+package com.example.numbergame.dataSource;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.numbergame.GameRecord;
+import com.example.numbergame.Result;
+import com.example.numbergame.dataSource.DataSource;
+import com.example.numbergame.dataSource.DataSourceCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;

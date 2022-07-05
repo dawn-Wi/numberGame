@@ -1,5 +1,7 @@
 package com.example.numbergame;
 
+import com.example.numbergame.dataSource.DataSource;
+
 public class UserRepository {
     private static volatile UserRepository INSTANCE = new UserRepository();
     private DataSource dataSource;
@@ -8,8 +10,8 @@ public class UserRepository {
         return INSTANCE;
     }
 
-    public void tryRegister(final String id, final String password, final String displayname, UserRepositoryCallback<Result> callback) {
-        dataSource.tryRegister(id, password, displayname, callback::onComplete);
+    public void tryRegister(final String id, final String password, final String displayName, UserRepositoryCallback<Result> callback) {
+        dataSource.tryRegister(id, password, displayName, callback::onComplete);
     }
 
     public void setDataSource(DataSource ds) {

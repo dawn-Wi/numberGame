@@ -1,6 +1,9 @@
-package com.example.numbergame;
+package com.example.numbergame.login;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.numbergame.R;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +29,7 @@ public class SignupFragment extends Fragment {
     private EditText et_email;
     private EditText et_password;
     private EditText et_displayName;
-    private Button bt_go;
+    private Button bt_signup;
 
     public SignupFragment() {
     }
@@ -40,8 +45,7 @@ public class SignupFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
-        FirebaseDataSource ds = new FirebaseDataSource();
-        UserRepository.getInstance().setDataSource(ds);
+
     }
 
     @Override
@@ -56,17 +60,60 @@ public class SignupFragment extends Fragment {
         et_email = view.findViewById(R.id.signup_et_email);
         et_password = view.findViewById(R.id.signup_et_password);
         et_displayName = view.findViewById(R.id.signup_et_displayName);
-        bt_go = view.findViewById(R.id.signup_bt_go);
+        bt_signup = view.findViewById(R.id.signup_bt_signup);
 
-        bt_go.setOnClickListener(new View.OnClickListener() {
+        et_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!isEmailValid(et_email.getText().toString())) {
+                    et_email.setTextColor(Color.RED);
+                } else {
+                    et_email.setTextColor(Color.BLACK);
+                }
+
+            }
+        });
+
+        et_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(!isPasswordValid(et_password.getText().toString())){
+                    et_password.setTextColor(Color.RED);
+                }
+                else{
+                    et_password.setTextColor(Color.BLACK);
+                }
+            }
+        });
+
+        bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isEmailValid(et_email.getText().toString())) {
                     Toast.makeText(getActivity().getApplicationContext(), "Email format is wrong", Toast.LENGTH_SHORT).show();
                     et_email.setText(null);
                     et_password.setText(null);
-                }
-                else if (isPasswordValid(et_password.getText().toString())) {
+                } else if (isPasswordValid(et_password.getText().toString())) {
                     loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Password is too short", Toast.LENGTH_SHORT).show();
