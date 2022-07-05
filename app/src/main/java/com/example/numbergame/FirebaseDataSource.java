@@ -6,20 +6,19 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FirebaseDataSource {
+public class FirebaseDataSource implements DataSource {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public void tryRegister(String id, String password, String displayname, DataSourceCallback<Result> callback){
-        Map<String,String> user = new HashMap<>();
-        user.put("id",id);
-        user.put("password",password);
-        user.put("displayname",displayname);
+    public void tryRegister(String id, String password, String displayname, DataSourceCallback<Result> callback) {
+        Map<String, String> user = new HashMap<>();
+        user.put("id", id);
+        user.put("password", password);
+        user.put("displayname", displayname);
 
         db.collection("users")
                 .document(id)
@@ -40,8 +39,23 @@ public class FirebaseDataSource {
                 });
     }
 
-    public interface DataSourceCallback<T>{
-        void onComplete(T result);
+    @Override
+    public void tryLogin(String id, String password, DataSourceCallback<Result> callback) {
+
     }
 
+    @Override
+    public void getAllRecords(DataSourceCallback<Result> callback) {
+
+    }
+
+    @Override
+    public void getMyRecords(String id, DataSourceCallback<Result> callback) {
+
+    }
+
+    @Override
+    public void addRecord(GameRecord toAdd, DataSourceCallback<Result> callback) {
+
+    }
 }
