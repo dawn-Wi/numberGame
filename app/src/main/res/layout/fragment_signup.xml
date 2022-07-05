@@ -11,7 +11,7 @@
         android:id="@+id/signup_tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="@string/et_email"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/signup_et_email"
         app:layout_constraintStart_toStartOf="@+id/signup_et_email" />
@@ -33,7 +33,7 @@
         android:id="@+id/signup_tv_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:text="@string/tv_password"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/signup_et_password"
         app:layout_constraintStart_toStartOf="@+id/signup_et_password" />
@@ -53,10 +53,33 @@
         app:layout_constraintTop_toBottomOf="@+id/signup_et_email" />
 
     <TextView
+        android:id="@+id/signup_tv_passwordCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_passwordCheck"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/signup_et_passwordCheck"
+        app:layout_constraintStart_toStartOf="@+id/signup_et_passwordCheck" />
+
+    <EditText
+        android:id="@+id/signup_et_passwordCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="15"
+        android:hint="@string/et_passwordCheck"
+        android:inputType="textPassword"
+        android:minHeight="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_et_password" />
+
+    <TextView
         android:id="@+id/signup_tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/tv_name"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/signup_et_displayName"
         app:layout_constraintStart_toStartOf="@+id/signup_et_displayName" />
@@ -73,15 +96,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_et_password" />
+        app:layout_constraintTop_toBottomOf="@+id/signup_et_passwordCheck" />
 
     <Button
         android:id="@+id/signup_bt_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Sign up"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/red"
+        android:text="@string/by_signup"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

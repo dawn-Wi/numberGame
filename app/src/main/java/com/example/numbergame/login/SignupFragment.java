@@ -1,5 +1,7 @@
 package com.example.numbergame.login;
 
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,6 +30,7 @@ public class SignupFragment extends Fragment {
 
     private EditText et_email;
     private EditText et_password;
+    private EditText et_passwordCheck;
     private EditText et_displayName;
     private Button bt_signup;
 
@@ -59,6 +62,7 @@ public class SignupFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         et_email = view.findViewById(R.id.signup_et_email);
         et_password = view.findViewById(R.id.signup_et_password);
+        et_passwordCheck = view.findViewById(R.id.signup_et_passwordCheck);
         et_displayName = view.findViewById(R.id.signup_et_displayName);
         bt_signup = view.findViewById(R.id.signup_bt_signup);
 
@@ -75,12 +79,9 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!isEmailValid(et_email.getText().toString())) {
-                    et_email.setTextColor(Color.RED);
-                } else {
-                    et_email.setTextColor(Color.BLACK);
+                if (!loginViewModel.isEmailValid(et_email.getText().toString())) {
+                    et_email.setError("Email format is wrong");
                 }
-
             }
         });
 
@@ -97,30 +98,34 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(!isPasswordValid(et_password.getText().toString())){
-                    et_password.setTextColor(Color.RED);
-                }
-                else{
-                    et_password.setTextColor(Color.BLACK);
+                if (!loginViewModel.isPasswordValid(et_password.getText().toString())) {
+                    et_password.setError("Password is too short");
                 }
             }
         });
 
+
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isEmailValid(et_email.getText().toString())) {
+                if (!loginViewModel.isEmailValid(et_email.getText().toString())) {
                     Toast.makeText(getActivity().getApplicationContext(), "Email format is wrong", Toast.LENGTH_SHORT).show();
                     et_email.setText(null);
                     et_password.setText(null);
-                } else if (isPasswordValid(et_password.getText().toString())) {
-                    loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
-                } else {
+                } else if (!loginViewModel.isPasswordValid(et_password.getText().toString())) {
                     Toast.makeText(getActivity().getApplicationContext(), "Password is too short", Toast.LENGTH_SHORT).show();
                     et_password.setText(null);
+                } else if (!loginViewModel.isPasswordEqual(et_password.getText().toString(), et_passwordCheck.getText().toString())) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Password is different", Toast.LENGTH_SHORT).show();
+                    et_password.setText(null);
+                    et_passwordCheck.setText(null);
+                } else {
+                    loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
                 }
             }
         });
+
+        loginViewModel.getLoginFormState()
 
         loginViewModel.registerSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -128,6 +133,7 @@ public class SignupFragment extends Fragment {
                 if (isRegistrationSuccessful) {
                     Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
                     NavHostFragment.findNavController(SignupFragment.this).navigate(R.id.action_signupFragment_to_loginFragment);
+                    loginViewModel.setRegisterSuccess(false);
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
                     et_email.setText(null);
@@ -135,19 +141,5 @@ public class SignupFragment extends Fragment {
                 }
             }
         });
-
     }
-
-    private boolean isEmailValid(String email) {
-        String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(email);
-        return m.matches();
-    }
-
-    private boolean isPasswordValid(String password) {
-        return !(password.length() < 4);
-    }
-
-
 }

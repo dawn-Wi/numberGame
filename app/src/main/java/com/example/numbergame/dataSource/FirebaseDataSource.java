@@ -18,11 +18,11 @@ import java.util.Map;
 public class FirebaseDataSource implements DataSource {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public void tryRegister(String id, String password, String displayname, DataSourceCallback<Result> callback) {
+    public void tryRegister(String id, String password, String displayName, DataSourceCallback<Result> callback) {
         Map<String, String> user = new HashMap<>();
         user.put("id", id);
         user.put("password", password);
-        user.put("displayname", displayname);
+        user.put("displayName", displayName);
 
         db.collection("users")
                 .document(id)
