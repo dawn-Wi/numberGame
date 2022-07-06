@@ -26,7 +26,6 @@ public class SignupFragment extends Fragment {
     private EditText et_password;
     private EditText et_passwordCheck;
     private EditText et_displayName;
-    private Button bt_checkId;
     private Button bt_signup;
 
     public SignupFragment() {
@@ -52,10 +51,7 @@ public class SignupFragment extends Fragment {
         et_password = view.findViewById(R.id.signup_et_password);
         et_passwordCheck = view.findViewById(R.id.signup_et_passwordCheck);
         et_displayName = view.findViewById(R.id.signup_et_displayName);
-        bt_checkId = view.findViewById(R.id.signup_bt_checkId);
         bt_signup = view.findViewById(R.id.signup_bt_signup);
-
-        bt_checkId.setEnabled(false);
 
 
         loginViewModel.getId();
@@ -74,9 +70,6 @@ public class SignupFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 loginViewModel.onIdTextChanged(editable.toString());
-                if(loginViewModel.isEmailValid(editable.toString())){
-                    bt_checkId.setEnabled(true);
-                }
             }
         });
 
@@ -152,24 +145,12 @@ public class SignupFragment extends Fragment {
         });
 
 
-        bt_checkId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!loginViewModel.checkId(et_email.getText().toString())) {
-                    Toast.makeText(requireContext(), "Email already exists", Toast.LENGTH_SHORT).show();
-                    et_email.setText("");
-                } else {
-                    Toast.makeText(requireContext(), "Available Email", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(loginViewModel.checkId(et_email.getText().toString())){
+                if (loginViewModel.checkId(et_email.getText().toString())) {
                     loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
-                }else{
+                } else {
                     Toast.makeText(requireContext(), "Email already exists", Toast.LENGTH_SHORT).show();
                     et_email.setText("");
                 }
