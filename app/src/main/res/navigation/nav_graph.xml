@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameSettingFragment"
-        android:name="com.example.numbergame.GameSettingFragment"
+        android:name="com.example.numbergame.game.GameSettingFragment"
         android:label="fragment_game_setting"
         tools:layout="@layout/fragment_game_setting" />
 

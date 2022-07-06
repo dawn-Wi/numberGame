@@ -1,6 +1,6 @@
 package com.example.numbergame.dataSource;
 
-import com.example.numbergame.GameRecord;
+import com.example.numbergame.game.GameRecord;
 import com.example.numbergame.Result;
 
 public interface DataSource {

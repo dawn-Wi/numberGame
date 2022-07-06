@@ -1,4 +1,4 @@
-package com.example.numbergame;
+package com.example.numbergame.game;
 
 public class GameRecord {
     private long timestamp;
