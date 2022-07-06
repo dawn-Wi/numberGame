@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,10 +15,27 @@ public class LoginViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
     private MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
     private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>(new LoginFormState(null, null, null, false));
+    private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
 
     private String idText = "";
     private String passwordText = "";
     private String displayNameText = "";
+
+    private List<String> userLists;
+
+    public void tryLogin(String id, String password) {
+        doingWork.setValue(true);
+        userRepository.tryLogin(id, password, result -> {
+            if (result instanceof Result.Success) {
+                loggedIn.setValue(true);
+            } else {
+                loggedIn.setValue(false);
+            }
+            doingWork.setValue(false);
+        });
+
+    }
 
     public void tryRegister(String id, String password, String displayName) {
         userRepository.tryRegister(id, password, displayName, result -> {
@@ -35,7 +53,7 @@ public class LoginViewModel extends ViewModel {
             loginFormState.setValue(new LoginFormState(null, null, null, false));
         } else if (!isEmailValid(idText)) {
             loginFormState.setValue(new LoginFormState("Email format is wrong", loginFormState.getValue().getPasswordErrorMessage(), loginFormState.getValue().getDisplayNameErrorMessage(), false));
-        } else if (isPasswordValid(passwordText)) {
+        } else if (isPasswordValid(passwordText) && isDisplayNameValid(displayNameText)) {
             loginFormState.setValue(new LoginFormState(null, null, null, true));
         } else if (loginFormState.getValue().getIdErrorMessage() != null) {
             loginFormState.setValue(new LoginFormState(null, loginFormState.getValue().getPasswordErrorMessage(), loginFormState.getValue().getDisplayNameErrorMessage(), false));
@@ -48,7 +66,7 @@ public class LoginViewModel extends ViewModel {
             loginFormState.setValue(new LoginFormState(null, null, null, false));
         } else if (!isPasswordValid(passwordText)) {
             loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), "Password is too short", loginFormState.getValue().getDisplayNameErrorMessage(), false));
-        } else if (isEmailValid(idText)) {
+        } else if (isEmailValid(idText) && isDisplayNameValid(displayNameText)) {
             loginFormState.setValue(new LoginFormState(null, null, null, true));
         } else if (loginFormState.getValue().getPasswordErrorMessage() != null) {
             loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), null, loginFormState.getValue().getDisplayNameErrorMessage(), false));
@@ -61,7 +79,7 @@ public class LoginViewModel extends ViewModel {
             loginFormState.setValue(new LoginFormState(null, null, null, false));
         } else if (!isDisplayNameValid(displayNameText)) {
             loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), loginFormState.getValue().getPasswordErrorMessage(), "Name is too short", false));
-        } else if (isDisplayNameValid(displayNameText)) {
+        } else if (isEmailValid(idText) && isPasswordValid(passwordText)) {
             loginFormState.setValue(new LoginFormState(null, null, null, true));
         } else if (loginFormState.getValue().getDisplayNameErrorMessage() != null) {
             loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), loginFormState.getValue().getPasswordErrorMessage(), null, false));
@@ -87,6 +105,22 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    public void getId() {
+        userRepository.getId(result -> {
+            if (result instanceof Result.Success) {
+                userLists = ((Result.Success<List<String>>) result).getData();
+            }
+        });
+    }
+
+    public boolean checkId(String id) {
+        if (!userLists.contains(id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean isDisplayNameValid(String displayName) {
         return !(displayName.length() < 2);
     }
@@ -96,12 +130,19 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void setRegisterSuccess(Boolean value) {
-        registerSuccess.setValue(value);
+        registerSuccess.postValue(value);
     }
 
     public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
 
+    public LiveData<Boolean> getDoingWork() {
+        return doingWork;
+    }
+
+    public LiveData<Boolean> isLoggedIn() {
+        return loggedIn;
+    }
 
 }

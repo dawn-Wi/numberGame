@@ -26,16 +26,10 @@ public class SignupFragment extends Fragment {
     private EditText et_password;
     private EditText et_passwordCheck;
     private EditText et_displayName;
+    private Button bt_checkId;
     private Button bt_signup;
 
     public SignupFragment() {
-    }
-
-    public static SignupFragment newInstance(String param1, String param2) {
-        SignupFragment fragment = new SignupFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -58,7 +52,11 @@ public class SignupFragment extends Fragment {
         et_password = view.findViewById(R.id.signup_et_password);
         et_passwordCheck = view.findViewById(R.id.signup_et_passwordCheck);
         et_displayName = view.findViewById(R.id.signup_et_displayName);
+        bt_checkId = view.findViewById(R.id.signup_bt_checkId);
         bt_signup = view.findViewById(R.id.signup_bt_signup);
+        bt_signup.setVisibility(View.INVISIBLE);
+
+        loginViewModel.getId();
 
         et_email.addTextChangedListener(new TextWatcher() {
             @Override
@@ -127,25 +125,33 @@ public class SignupFragment extends Fragment {
             }
         });
 
+        bt_checkId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!loginViewModel.checkId(et_email.getText().toString())) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Email already exist", Toast.LENGTH_SHORT).show();
+                    et_email.setText(null);
+                    bt_signup.setVisibility(View.INVISIBLE);
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Available Email", Toast.LENGTH_SHORT).show();
+                    bt_signup.setVisibility(View.VISIBLE);
+                    et_email.setEnabled(false);
+                }
+            }
+        });
+
 
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginViewModel.tryRegister(et_email.getText().toString(),et_password.getText().toString(),et_displayName.getText().toString());
-//                if (!loginViewModel.isEmailValid(et_email.getText().toString())) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Email format is wrong", Toast.LENGTH_SHORT).show();
-//                    et_email.setText(null);
-//                    et_password.setText(null);
-//                } else if (!loginViewModel.isPasswordValid(et_password.getText().toString())) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Password is too short", Toast.LENGTH_SHORT).show();
-//                    et_password.setText(null);
-//                } else if (!loginViewModel.isPasswordEqual(et_password.getText().toString(), et_passwordCheck.getText().toString())) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Password is different", Toast.LENGTH_SHORT).show();
-//                    et_password.setText(null);
-//                    et_passwordCheck.setText(null);
-//                } else {
-//                    loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
-//                }
+                if (!loginViewModel.isPasswordEqual(et_password.getText().toString(), et_passwordCheck.getText().toString())) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Password is different", Toast.LENGTH_SHORT).show();
+                    et_password.setText(null);
+                    et_passwordCheck.setText(null);
+                } else {
+                    loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
+                }
+
             }
         });
 

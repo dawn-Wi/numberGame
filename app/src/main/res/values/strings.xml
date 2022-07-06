@@ -10,4 +10,6 @@
     <string name="tv_passwordCheck">Password Check</string>
     <string name="tv_name">Name</string>
     <string name="by_signup">Sign up</string>
+    <string name="bt_checkId">Check Id</string>
+    <string name="tv_email">Email</string>
 </resources>

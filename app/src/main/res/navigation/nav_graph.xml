@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_gameSettingFragment"
+            app:destination="@id/gameSettingFragment" />
     </fragment>
 
     <fragment
@@ -24,5 +27,10 @@
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/gameSettingFragment"
+        android:name="com.example.numbergame.GameSettingFragment"
+        android:label="fragment_game_setting"
+        tools:layout="@layout/fragment_game_setting" />
 
 </navigation>

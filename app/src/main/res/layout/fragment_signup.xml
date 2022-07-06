@@ -11,7 +11,7 @@
         android:id="@+id/signup_tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/et_email"
+        android:text="@string/tv_email"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/signup_et_email"
         app:layout_constraintStart_toStartOf="@+id/signup_et_email" />
@@ -21,13 +21,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
-        android:ems="15"
+        android:ems="10"
         android:hint="@string/et_email"
         android:inputType="textEmailAddress"
         android:minHeight="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/signup_et_password"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/signup_bt_checkId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:text="@string/bt_checkId"
+        app:layout_constraintBottom_toBottomOf="@+id/signup_et_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/signup_et_email"
+        app:layout_constraintTop_toTopOf="@+id/signup_et_email" />
 
     <TextView
         android:id="@+id/signup_tv_password"
@@ -103,9 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/red"
         android:text="@string/by_signup"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

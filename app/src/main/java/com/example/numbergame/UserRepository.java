@@ -14,6 +14,14 @@ public class UserRepository {
         dataSource.tryRegister(id, password, displayName, callback::onComplete);
     }
 
+    public void tryLogin(final String id, final String password, UserRepositoryCallback<Result> callback){
+        dataSource.tryLogin(id, password,callback::onComplete);
+    }
+
+    public void getId(final UserRepositoryCallback<Result> callback) {
+        dataSource.getId(callback::onComplete);
+    }
+
     public void setDataSource(DataSource ds) {
         this.dataSource = ds;
     }
