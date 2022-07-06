@@ -14,13 +14,18 @@ import java.util.regex.Pattern;
 public class LoginViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
     private MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
-    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>(new LoginFormState(null, null, null, false));
+    private final MutableLiveData<SignupFormState> signupFormState = new MutableLiveData<>(new SignupFormState(null, null, null, null, false));
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>(new LoginFormState(null,null,false));
     private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
 
     private String idText = "";
     private String passwordText = "";
+    private String passwordCheckText = "";
     private String displayNameText = "";
+
+    private String loginIdText = "";
+    private String loginPasswordText="";
 
     private List<String> userLists;
 
@@ -46,43 +51,82 @@ public class LoginViewModel extends ViewModel {
             }
         });
     }
+    public void onLoginIdTextChanged(String changedId){
+        loginIdText = changedId;
+        if(changedId.length()==0){
+            loginFormState.setValue(new LoginFormState(null,null,false));
+        }else if(!isEmailValid(loginIdText)){
+            loginFormState.setValue(new LoginFormState("Email format is wrong", loginFormState.getValue().getPasswordErrorMessage(),false));
+        }else if(isPasswordValid(loginPasswordText)){
+            loginFormState.setValue(new LoginFormState(null,null,true));
+        }else if(loginFormState.getValue().getIdErrorMessage()!=null){
+            loginFormState.setValue(new LoginFormState(null, loginFormState.getValue().getPasswordErrorMessage(),false));
+        }
+    }
+
+    public void onLoginPasswordTextChanged(String changedPassword){
+        loginPasswordText = changedPassword;
+        if(changedPassword.length()==0){
+            loginFormState.setValue(new LoginFormState(null,null,false));
+        }else if(!isPasswordValid(loginPasswordText)){
+            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), "Password is too short",false));
+        }else if(isEmailValid(loginIdText)){
+            loginFormState.setValue(new LoginFormState(null,null,true));
+        }else if(loginFormState.getValue().getPasswordErrorMessage()!=null){
+            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), null,false));
+        }
+    }
+
 
     public void onIdTextChanged(String changedId) {
         idText = changedId;
         if (changedId.length() == 0) {
-            loginFormState.setValue(new LoginFormState(null, null, null, false));
+            signupFormState.setValue(new SignupFormState(null, null, null, null, false));
         } else if (!isEmailValid(idText)) {
-            loginFormState.setValue(new LoginFormState("Email format is wrong", loginFormState.getValue().getPasswordErrorMessage(), loginFormState.getValue().getDisplayNameErrorMessage(), false));
-        } else if (isPasswordValid(passwordText) && isDisplayNameValid(displayNameText)) {
-            loginFormState.setValue(new LoginFormState(null, null, null, true));
-        } else if (loginFormState.getValue().getIdErrorMessage() != null) {
-            loginFormState.setValue(new LoginFormState(null, loginFormState.getValue().getPasswordErrorMessage(), loginFormState.getValue().getDisplayNameErrorMessage(), false));
+            signupFormState.setValue(new SignupFormState("Email format is wrong", signupFormState.getValue().getPasswordErrorMessage(), signupFormState.getValue().getPasswordCheckErrorMessage(), signupFormState.getValue().getDisplayNameErrorMessage(), false));
+        } else if (isPasswordValid(passwordText) && isPasswordEqual(passwordText, passwordCheckText) && isDisplayNameValid(displayNameText)) {
+            signupFormState.setValue(new SignupFormState(null, null, null, null, true));
+        } else if (signupFormState.getValue().getIdErrorMessage() != null) {
+            signupFormState.setValue(new SignupFormState(null, signupFormState.getValue().getPasswordErrorMessage(), signupFormState.getValue().getPasswordCheckErrorMessage(), signupFormState.getValue().getDisplayNameErrorMessage(), false));
         }
     }
 
     public void onPasswordTextChanged(String changedPassword) {
         passwordText = changedPassword;
         if (changedPassword.length() == 0) {
-            loginFormState.setValue(new LoginFormState(null, null, null, false));
+            signupFormState.setValue(new SignupFormState(null, null, null, null, false));
         } else if (!isPasswordValid(passwordText)) {
-            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), "Password is too short", loginFormState.getValue().getDisplayNameErrorMessage(), false));
-        } else if (isEmailValid(idText) && isDisplayNameValid(displayNameText)) {
-            loginFormState.setValue(new LoginFormState(null, null, null, true));
-        } else if (loginFormState.getValue().getPasswordErrorMessage() != null) {
-            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), null, loginFormState.getValue().getDisplayNameErrorMessage(), false));
+            signupFormState.setValue(new SignupFormState(signupFormState.getValue().getIdErrorMessage(), "Password is too short", signupFormState.getValue().getPasswordCheckErrorMessage(), signupFormState.getValue().getDisplayNameErrorMessage(), false));
+        } else if (isEmailValid(idText) && isPasswordEqual(passwordText, passwordCheckText) && isDisplayNameValid(displayNameText)) {
+            signupFormState.setValue(new SignupFormState(null, null, null, null, true));
+        } else if (signupFormState.getValue().getPasswordErrorMessage() != null) {
+            signupFormState.setValue(new SignupFormState(signupFormState.getValue().getIdErrorMessage(), null, signupFormState.getValue().getPasswordCheckErrorMessage(), signupFormState.getValue().getDisplayNameErrorMessage(), false));
+        }
+    }
+
+    public void onPasswordCheckTextChanged(String changedPasswordCheck) {
+        passwordCheckText = changedPasswordCheck;
+        if (changedPasswordCheck.length() == 0) {
+            signupFormState.setValue(new SignupFormState(null, null, null, null, false));
+        } else if (!isPasswordEqual(passwordText, passwordCheckText)) {
+            signupFormState.setValue(new SignupFormState(signupFormState.getValue().getIdErrorMessage(), signupFormState.getValue().getPasswordErrorMessage(), "Password is wrong", signupFormState.getValue().getDisplayNameErrorMessage(), false));
+        } else if (isEmailValid(idText) && isPasswordValid(passwordText) && isDisplayNameValid(displayNameText)) {
+            signupFormState.setValue(new SignupFormState(null, null, null, null, true));
+        } else if (signupFormState.getValue().getPasswordCheckErrorMessage() != null) {
+            signupFormState.setValue(new SignupFormState(signupFormState.getValue().getIdErrorMessage(), signupFormState.getValue().getPasswordErrorMessage(), null, signupFormState.getValue().getDisplayNameErrorMessage(), false));
         }
     }
 
     public void onDisplayNameTextChanged(String changedDisplayName) {
         displayNameText = changedDisplayName;
         if (changedDisplayName.length() == 0) {
-            loginFormState.setValue(new LoginFormState(null, null, null, false));
+            signupFormState.setValue(new SignupFormState(null, null, null, null, false));
         } else if (!isDisplayNameValid(displayNameText)) {
-            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), loginFormState.getValue().getPasswordErrorMessage(), "Name is too short", false));
-        } else if (isEmailValid(idText) && isPasswordValid(passwordText)) {
-            loginFormState.setValue(new LoginFormState(null, null, null, true));
-        } else if (loginFormState.getValue().getDisplayNameErrorMessage() != null) {
-            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), loginFormState.getValue().getPasswordErrorMessage(), null, false));
+            signupFormState.setValue(new SignupFormState(signupFormState.getValue().getIdErrorMessage(), signupFormState.getValue().getPasswordErrorMessage(), signupFormState.getValue().getPasswordCheckErrorMessage(), "Name is too short", false));
+        } else if (isEmailValid(idText) && isPasswordValid(passwordText)&&isPasswordEqual(passwordText,passwordCheckText)) {
+            signupFormState.setValue(new SignupFormState(null, null, null, null, true));
+        } else if (signupFormState.getValue().getDisplayNameErrorMessage() != null) {
+            signupFormState.setValue(new SignupFormState(signupFormState.getValue().getIdErrorMessage(), signupFormState.getValue().getPasswordErrorMessage(), signupFormState.getValue().getPasswordCheckErrorMessage(), null, false));
         }
     }
 
@@ -131,6 +175,10 @@ public class LoginViewModel extends ViewModel {
 
     public void setRegisterSuccess(Boolean value) {
         registerSuccess.postValue(value);
+    }
+
+    public LiveData<SignupFormState> getSignupFormState() {
+        return signupFormState;
     }
 
     public LiveData<LoginFormState> getLoginFormState() {

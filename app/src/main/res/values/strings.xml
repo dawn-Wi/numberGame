@@ -12,4 +12,8 @@
     <string name="by_signup">Sign up</string>
     <string name="bt_checkId">Check Id</string>
     <string name="tv_email">Email</string>
+    <string name="title_activity_game_menu">GameMenu</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

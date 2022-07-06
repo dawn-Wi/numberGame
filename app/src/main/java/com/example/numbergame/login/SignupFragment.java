@@ -35,7 +35,7 @@ public class SignupFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
     }
 
@@ -54,7 +54,9 @@ public class SignupFragment extends Fragment {
         et_displayName = view.findViewById(R.id.signup_et_displayName);
         bt_checkId = view.findViewById(R.id.signup_bt_checkId);
         bt_signup = view.findViewById(R.id.signup_bt_signup);
-        bt_signup.setVisibility(View.INVISIBLE);
+
+        bt_checkId.setEnabled(false);
+
 
         loginViewModel.getId();
 
@@ -72,6 +74,9 @@ public class SignupFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 loginViewModel.onIdTextChanged(editable.toString());
+                if(loginViewModel.isEmailValid(editable.toString())){
+                    bt_checkId.setEnabled(true);
+                }
             }
         });
 
@@ -92,6 +97,23 @@ public class SignupFragment extends Fragment {
             }
         });
 
+        et_passwordCheck.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                loginViewModel.onPasswordCheckTextChanged(editable.toString());
+            }
+        });
+
         et_displayName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -109,47 +131,47 @@ public class SignupFragment extends Fragment {
             }
         });
 
-        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
+
+        loginViewModel.getSignupFormState().observe(getViewLifecycleOwner(), new Observer<SignupFormState>() {
             @Override
-            public void onChanged(LoginFormState loginFormState) {
-                if (loginFormState.getIdErrorMessage() != null) {
-                    et_email.setError(loginFormState.getIdErrorMessage());
+            public void onChanged(SignupFormState SignupFormState) {
+                if (SignupFormState.getIdErrorMessage() != null) {
+                    et_email.setError(SignupFormState.getIdErrorMessage());
                 }
-                if (loginFormState.getPasswordErrorMessage() != null) {
-                    et_password.setError(loginFormState.getPasswordErrorMessage());
+                if (SignupFormState.getPasswordErrorMessage() != null) {
+                    et_password.setError(SignupFormState.getPasswordErrorMessage());
                 }
-                if (loginFormState.getDisplayNameErrorMessage() != null) {
-                    et_displayName.setError(loginFormState.getDisplayNameErrorMessage());
+                if (SignupFormState.getPasswordCheckErrorMessage() != null) {
+                    et_passwordCheck.setError(SignupFormState.getPasswordCheckErrorMessage());
                 }
-                bt_signup.setEnabled(loginFormState.isFieldsValid());
+                if (SignupFormState.getDisplayNameErrorMessage() != null) {
+                    et_displayName.setError(SignupFormState.getDisplayNameErrorMessage());
+                }
+                bt_signup.setEnabled(SignupFormState.isFieldsValid());
             }
         });
+
 
         bt_checkId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!loginViewModel.checkId(et_email.getText().toString())) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Email already exist", Toast.LENGTH_SHORT).show();
-                    et_email.setText(null);
-                    bt_signup.setVisibility(View.INVISIBLE);
+                    Toast.makeText(requireContext(), "Email already exists", Toast.LENGTH_SHORT).show();
+                    et_email.setText("");
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Available Email", Toast.LENGTH_SHORT).show();
-                    bt_signup.setVisibility(View.VISIBLE);
-                    et_email.setEnabled(false);
+                    Toast.makeText(requireContext(), "Available Email", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!loginViewModel.isPasswordEqual(et_password.getText().toString(), et_passwordCheck.getText().toString())) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Password is different", Toast.LENGTH_SHORT).show();
-                    et_password.setText(null);
-                    et_passwordCheck.setText(null);
-                } else {
+                if(loginViewModel.checkId(et_email.getText().toString())){
                     loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
+                }else{
+                    Toast.makeText(requireContext(), "Email already exists", Toast.LENGTH_SHORT).show();
+                    et_email.setText("");
                 }
 
             }
@@ -160,13 +182,13 @@ public class SignupFragment extends Fragment {
             @Override
             public void onChanged(Boolean isRegistrationSuccessful) {
                 if (isRegistrationSuccessful) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
                     NavHostFragment.findNavController(SignupFragment.this).navigate(R.id.action_signupFragment_to_loginFragment);
                     loginViewModel.setRegisterSuccess(false);
                 } else {
-                    //Toast.makeText(getActivity().getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
-                    et_email.setText(null);
-                    et_password.setText(null);
+                    Toast.makeText(requireContext(), "fail", Toast.LENGTH_SHORT).show();
+                    et_email.setText("");
+                    et_password.setText("");
                 }
             }
         });
