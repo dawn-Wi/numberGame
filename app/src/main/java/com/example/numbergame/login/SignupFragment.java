@@ -1,8 +1,5 @@
 package com.example.numbergame.login;
 
-import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
-
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,9 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.numbergame.R;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SignupFragment extends Fragment {
 
@@ -79,9 +73,7 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!loginViewModel.isEmailValid(et_email.getText().toString())) {
-                    et_email.setError("Email format is wrong");
-                }
+                loginViewModel.onIdTextChanged(editable.toString());
             }
         });
 
@@ -98,9 +90,40 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!loginViewModel.isPasswordValid(et_password.getText().toString())) {
-                    et_password.setError("Password is too short");
+                loginViewModel.onPasswordTextChanged(editable.toString());
+            }
+        });
+
+        et_displayName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                loginViewModel.onDisplayNameTextChanged(editable.toString());
+            }
+        });
+
+        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
+            @Override
+            public void onChanged(LoginFormState loginFormState) {
+                if (loginFormState.getIdErrorMessage() != null) {
+                    et_email.setError(loginFormState.getIdErrorMessage());
                 }
+                if (loginFormState.getPasswordErrorMessage() != null) {
+                    et_password.setError(loginFormState.getPasswordErrorMessage());
+                }
+                if (loginFormState.getDisplayNameErrorMessage() != null) {
+                    et_displayName.setError(loginFormState.getDisplayNameErrorMessage());
+                }
+                bt_signup.setEnabled(loginFormState.isFieldsValid());
             }
         });
 
@@ -108,24 +131,24 @@ public class SignupFragment extends Fragment {
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!loginViewModel.isEmailValid(et_email.getText().toString())) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Email format is wrong", Toast.LENGTH_SHORT).show();
-                    et_email.setText(null);
-                    et_password.setText(null);
-                } else if (!loginViewModel.isPasswordValid(et_password.getText().toString())) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Password is too short", Toast.LENGTH_SHORT).show();
-                    et_password.setText(null);
-                } else if (!loginViewModel.isPasswordEqual(et_password.getText().toString(), et_passwordCheck.getText().toString())) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Password is different", Toast.LENGTH_SHORT).show();
-                    et_password.setText(null);
-                    et_passwordCheck.setText(null);
-                } else {
-                    loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
-                }
+                loginViewModel.tryRegister(et_email.getText().toString(),et_password.getText().toString(),et_displayName.getText().toString());
+//                if (!loginViewModel.isEmailValid(et_email.getText().toString())) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Email format is wrong", Toast.LENGTH_SHORT).show();
+//                    et_email.setText(null);
+//                    et_password.setText(null);
+//                } else if (!loginViewModel.isPasswordValid(et_password.getText().toString())) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Password is too short", Toast.LENGTH_SHORT).show();
+//                    et_password.setText(null);
+//                } else if (!loginViewModel.isPasswordEqual(et_password.getText().toString(), et_passwordCheck.getText().toString())) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Password is different", Toast.LENGTH_SHORT).show();
+//                    et_password.setText(null);
+//                    et_passwordCheck.setText(null);
+//                } else {
+//                    loginViewModel.tryRegister(et_email.getText().toString(), et_password.getText().toString(), et_displayName.getText().toString());
+//                }
             }
         });
 
-        loginViewModel.getLoginFormState()
 
         loginViewModel.registerSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override

@@ -13,10 +13,11 @@ import java.util.regex.Pattern;
 public class LoginViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
     private MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
-    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>(new LoginFormState(null, null, false));
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>(new LoginFormState(null, null, null, false));
 
     private String idText = "";
     private String passwordText = "";
+    private String displayNameText = "";
 
     public void tryRegister(String id, String password, String displayName) {
         userRepository.tryRegister(id, password, displayName, result -> {
@@ -31,13 +32,39 @@ public class LoginViewModel extends ViewModel {
     public void onIdTextChanged(String changedId) {
         idText = changedId;
         if (changedId.length() == 0) {
-
+            loginFormState.setValue(new LoginFormState(null, null, null, false));
         } else if (!isEmailValid(idText)) {
-            loginFormState.setValue(new LoginFormState("email format is wrong", loginFormState.getValue().getPasswordErrorMessage(), false));
+            loginFormState.setValue(new LoginFormState("Email format is wrong", loginFormState.getValue().getPasswordErrorMessage(), loginFormState.getValue().getDisplayNameErrorMessage(), false));
         } else if (isPasswordValid(passwordText)) {
-            loginFormState.setValue(new LoginFormState(null, null, true));
-        } else if (loginFormState.getValue().getUsernameErrorMessage()!=null){
-            loginFormState.setValue(new LoginFormState(null, loginFormState.getValue().getPasswordErrorMessage(),false));
+            loginFormState.setValue(new LoginFormState(null, null, null, true));
+        } else if (loginFormState.getValue().getIdErrorMessage() != null) {
+            loginFormState.setValue(new LoginFormState(null, loginFormState.getValue().getPasswordErrorMessage(), loginFormState.getValue().getDisplayNameErrorMessage(), false));
+        }
+    }
+
+    public void onPasswordTextChanged(String changedPassword) {
+        passwordText = changedPassword;
+        if (changedPassword.length() == 0) {
+            loginFormState.setValue(new LoginFormState(null, null, null, false));
+        } else if (!isPasswordValid(passwordText)) {
+            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), "Password is too short", loginFormState.getValue().getDisplayNameErrorMessage(), false));
+        } else if (isEmailValid(idText)) {
+            loginFormState.setValue(new LoginFormState(null, null, null, true));
+        } else if (loginFormState.getValue().getPasswordErrorMessage() != null) {
+            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), null, loginFormState.getValue().getDisplayNameErrorMessage(), false));
+        }
+    }
+
+    public void onDisplayNameTextChanged(String changedDisplayName) {
+        displayNameText = changedDisplayName;
+        if (changedDisplayName.length() == 0) {
+            loginFormState.setValue(new LoginFormState(null, null, null, false));
+        } else if (!isDisplayNameValid(displayNameText)) {
+            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), loginFormState.getValue().getPasswordErrorMessage(), "Name is too short", false));
+        } else if (isDisplayNameValid(displayNameText)) {
+            loginFormState.setValue(new LoginFormState(null, null, null, true));
+        } else if (loginFormState.getValue().getDisplayNameErrorMessage() != null) {
+            loginFormState.setValue(new LoginFormState(loginFormState.getValue().getIdErrorMessage(), loginFormState.getValue().getPasswordErrorMessage(), null, false));
         }
     }
 
@@ -60,12 +87,20 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    public boolean isDisplayNameValid(String displayName) {
+        return !(displayName.length() < 2);
+    }
+
     public LiveData<Boolean> registerSuccess() {
         return registerSuccess;
     }
 
     public void setRegisterSuccess(Boolean value) {
         registerSuccess.setValue(value);
+    }
+
+    public LiveData<LoginFormState> getLoginFormState() {
+        return loginFormState;
     }
 
 
