@@ -164,7 +164,7 @@ public class SignupFragment extends Fragment {
                     NavHostFragment.findNavController(SignupFragment.this).navigate(R.id.action_signupFragment_to_loginFragment);
                     loginViewModel.setRegisterSuccess(false);
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity().getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
                     et_email.setText(null);
                     et_password.setText(null);
                 }
