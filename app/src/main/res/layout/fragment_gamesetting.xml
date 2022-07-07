@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,38 +20,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/gameSetting_tv_minNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="@string/tv_minNumber"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.35"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameSetting_sp_language" />
-
-    <EditText
-        android:id="@+id/gameSetting_et_minNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:ems="3"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/gameSetting_tv_minNumber"
-        app:layout_constraintStart_toEndOf="@+id/gameSetting_tv_minNumber"
-        app:layout_constraintTop_toTopOf="@+id/gameSetting_tv_minNumber" />
-
-
-    <TextView
         android:id="@+id/gameSetting_tv_maxNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:text="@string/tv_maxNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameSetting_tv_minNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/gameSetting_sp_language" />
 
     <EditText
         android:id="@+id/gameSetting_et_maxNumber"
@@ -56,15 +37,17 @@
         android:layout_marginStart="20dp"
         android:ems="3"
         android:inputType="number"
+        android:maxLength="3"
         app:layout_constraintBottom_toBottomOf="@+id/gameSetting_tv_maxNumber"
         app:layout_constraintStart_toEndOf="@+id/gameSetting_tv_maxNumber"
         app:layout_constraintTop_toTopOf="@+id/gameSetting_tv_maxNumber" />
+
 
     <Button
         android:id="@+id/gameSetting_bt_gameStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         android:text="@string/bt_gameStart"
         app:layout_constraintEnd_toEndOf="@+id/gameSetting_et_maxNumber"
         app:layout_constraintStart_toStartOf="@+id/gameSetting_tv_maxNumber"
@@ -72,3 +55,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

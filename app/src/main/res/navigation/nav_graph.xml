@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
     </fragment>
 
     <fragment
@@ -27,10 +24,5 @@
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/gameFragment"
-        android:name="com.example.numbergame.game.GameFragment"
-        android:label="fragment_game"
-        tools:layout="@layout/fragment_game" />
 
 </navigation>

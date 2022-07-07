@@ -9,7 +9,11 @@
         android:id="@+id/navigation_gameSetting"
         android:name="com.example.numbergame.ui.GameSetting.GameSettingFragment"
         android:label="@string/item_gamesetting"
-        tools:layout="@layout/fragment_gamesetting" />
+        tools:layout="@layout/fragment_gamesetting" >
+        <action
+            android:id="@+id/action_navigation_gameSetting_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_myRecord"
@@ -22,4 +26,10 @@
         android:name="com.example.numbergame.ui.Leaderboard.LeaderboardFragment"
         android:label="@string/item_readerboard"
         tools:layout="@layout/fragment_leaderboard" />
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.example.numbergame.game.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" />
+
 </navigation>

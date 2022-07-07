@@ -10,26 +10,13 @@ import android.view.ViewGroup;
 
 import com.example.numbergame.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GameFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GameFragment extends Fragment {
 
     public GameFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GameFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static GameFragment newInstance(String param1, String param2) {
         GameFragment fragment = new GameFragment();
         Bundle args = new Bundle();
