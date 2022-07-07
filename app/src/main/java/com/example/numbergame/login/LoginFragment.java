@@ -3,6 +3,7 @@ package com.example.numbergame.login;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -29,6 +30,8 @@ public class LoginFragment extends Fragment {
     private Button bt_login;
     private Button bt_signup;
 
+    private  long pressedTime = 0;
+
     public LoginFragment() {
     }
 
@@ -36,6 +39,20 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(System.currentTimeMillis()>pressedTime+2000){
+                    pressedTime = System.currentTimeMillis();
+                    Toast.makeText(requireContext(),"Press once more to exit",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(requireContext(),"Exit the app",Toast.LENGTH_SHORT).show();
+                    requireActivity().finish();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -147,4 +164,5 @@ public class LoginFragment extends Fragment {
 
 
     }
+
 }

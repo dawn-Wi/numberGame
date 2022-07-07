@@ -1,6 +1,7 @@
 package com.example.numbergame;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,6 +17,8 @@ public class GameMenuActivity extends AppCompatActivity {
 
     private ActivityGamemenuBinding binding;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,5 +33,7 @@ public class GameMenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_gamemenu);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
+
+
 
 }
