@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.home;
+package com.example.numbergame.ui.GameSetting;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.numbergame.databinding.FragmentHomeBinding;
+import com.example.numbergame.databinding.FragmentGamesettingBinding;
 
-public class HomeFragment extends Fragment {
+public class GameSettingFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentGamesettingBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        GameSettingViewModel gameSettingViewModel =
+                new ViewModelProvider(this).get(GameSettingViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentGamesettingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        gameSettingViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

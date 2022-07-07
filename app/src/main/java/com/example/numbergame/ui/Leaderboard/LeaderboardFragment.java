@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.notifications;
+package com.example.numbergame.ui.Leaderboard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.numbergame.databinding.FragmentNotificationsBinding;
+import com.example.numbergame.databinding.FragmentLeaderboardBinding;
 
-public class NotificationsFragment extends Fragment {
+public class LeaderboardFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentLeaderboardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        LeaderboardViewModel leaderboardViewModel =
+                new ViewModelProvider(this).get(LeaderboardViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentLeaderboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        leaderboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

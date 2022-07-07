@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_gameSetting">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.numbergame.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_gameSetting"
+        android:name="com.example.numbergame.ui.GameSetting.GameSettingFragment"
+        android:label="@string/item_gamesetting"
+        tools:layout="@layout/fragment_gamesetting" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.numbergame.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_myRecord"
+        android:name="com.example.numbergame.ui.MyRecord.MyRecordFragment"
+        android:label="@string/item_myrecord"
+        tools:layout="@layout/fragment_myrecord" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.numbergame.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_leaderBoard"
+        android:name="com.example.numbergame.ui.Leaderboard.LeaderboardFragment"
+        android:label="@string/item_readerboard"
+        tools:layout="@layout/fragment_leaderboard" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.dashboard;
+package com.example.numbergame.ui.MyRecord;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.numbergame.databinding.FragmentDashboardBinding;
+import com.example.numbergame.databinding.FragmentMyrecordBinding;
 
-public class DashboardFragment extends Fragment {
+public class MyRecordFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentMyrecordBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        MyRecordViewModel myRecordViewModel =
+                new ViewModelProvider(this).get(MyRecordViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentMyrecordBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        myRecordViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

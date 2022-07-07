@@ -1,5 +1,6 @@
 package com.example.numbergame.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,9 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.numbergame.dataSource.FirebaseDataSource;
+import com.example.numbergame.GameMenuActivity;
 import com.example.numbergame.R;
-import com.example.numbergame.UserRepository;
 
 public class LoginFragment extends Fragment {
     private LoginViewModel loginViewModel;
@@ -119,7 +119,9 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(Boolean isLoggedIn) {
                 if (isLoggedIn == true) {
-                    NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_gameFragment);
+                    //NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_gameFragment);
+                    Intent intent = new Intent(getActivity(), GameMenuActivity.class);
+                    startActivity(intent);
                     Toast.makeText(getActivity().getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
