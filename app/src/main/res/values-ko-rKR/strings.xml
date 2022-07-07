@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">numberGame</string>
+    <string name="et_email">이메일</string>
+    <string name="et_password">비밀번호</string>
+    <string name="et_passwordCheck">비밀번호 확인</string>
+    <string name="et_name">이름</string>
+    <string name="tv_password">비밀번호</string>
+    <string name="hello_blank_fragment">빈 화면</string>
+    <string name="tv_passwordCheck">비밀번호 확인</string>
+    <string name="tv_name">이름</string>
+    <string name="by_signup">회원가입</string>
+    <string name="bt_checkId">아이디 확인</string>
+    <string name="tv_email">이메일</string>
+    <string name="title_activity_game_menu">게임 메뉴</string>
+    <string name="title_home">홈</string>
+    <string name="title_dashboard">대쉬보드</string>
+    <string name="title_notifications">알림</string>
+    <string name="bt_signin">로그인</string>
+    <string name="bt_signup">회원가입</string>
+    <string name="item_gamesetting">게임 설정</string>
+    <string name="item_myrecord">내 기록</string>
+    <string name="item_readerboard">순위</string>
+    <string name="tv_minNumber">최소 숫자</string>
+    <string name="tv_maxNumber">최대 숫자</string>
+    <string name="bt_gameStart">시작</string>
+    <string name="korean">한국어</string>
+    <string name="english">영어</string>
+</resources>
