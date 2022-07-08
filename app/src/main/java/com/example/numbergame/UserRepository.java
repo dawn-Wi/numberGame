@@ -6,6 +6,8 @@ public class UserRepository {
     private static volatile UserRepository INSTANCE = new UserRepository();
     private DataSource dataSource;
 
+    private String inputMaxNumber;
+
     public static UserRepository getInstance() {
         return INSTANCE;
     }
@@ -20,6 +22,15 @@ public class UserRepository {
 
     public void getId(final UserRepositoryCallback<Result> callback) {
         dataSource.getId(callback::onComplete);
+    }
+
+    public void setMaxNumber(final String maxNumber, UserRepositoryCallback<Result>callback){
+        inputMaxNumber=maxNumber;
+        callback.onComplete(new Result.Success<String>("Success"));
+    }
+
+    public void getMaxNumber(UserRepositoryCallback<Result>callback){
+        callback.onComplete(new Result.Success<String>(inputMaxNumber));
     }
 
     public void setDataSource(DataSource ds) {

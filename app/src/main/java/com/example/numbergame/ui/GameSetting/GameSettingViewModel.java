@@ -4,10 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GameSettingViewModel extends ViewModel {
-    private final MutableLiveData<GameSettingFormState> gameFormState = new MutableLiveData<>(new GameSettingFormState(null,  false));
+import com.example.numbergame.Result;
+import com.example.numbergame.UserRepository;
 
-    private String minNumberText = "";
+public class GameSettingViewModel extends ViewModel {
+    private final UserRepository userRepository = UserRepository.getInstance();
+    private final MutableLiveData<GameSettingFormState> gameFormState = new MutableLiveData<>(new GameSettingFormState(null,  false));
+    private final MutableLiveData<Boolean> savingMaxNumber = new MutableLiveData<>();
+
+    private String maxNumberText = "";
+
 
     private final MutableLiveData<String> mText;
 
@@ -20,9 +26,9 @@ public class GameSettingViewModel extends ViewModel {
         return mText;
     }
 
-    public void onMaxNumberTextChanged(String changedMinNumber) {
-        minNumberText = changedMinNumber;
-        if (!isMaxNumberValid(minNumberText)) {
+    public void onMaxNumberTextChanged(String changedMaxNumber) {
+        maxNumberText = changedMaxNumber;
+        if (!isMaxNumberValid(maxNumberText)) {
             gameFormState.setValue(new GameSettingFormState("Please enter a number between 20 and 50", false));
         } else{
             gameFormState.setValue(new GameSettingFormState(null,  true));
@@ -43,9 +49,23 @@ public class GameSettingViewModel extends ViewModel {
         return answer;
     }
 
+    public void setMaxNumber(String maxNumber){
+        userRepository.setMaxNumber(maxNumber,result -> {
+            if (result instanceof Result.Success) {
+                savingMaxNumber.setValue(true);
+            } else {
+                savingMaxNumber.setValue(false);
+            }
+        });
+    }
 
     public LiveData<GameSettingFormState> getGameSettingFormState() {
         return gameFormState;
+    }
+
+
+    public LiveData<Boolean> isSaved() {
+        return savingMaxNumber;
     }
 
 }

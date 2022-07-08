@@ -177,6 +177,8 @@ public class GameSettingFragment extends Fragment {
                 if (gameSettingFormState.getMaxNumberErrorMessage() != null) {
                     et_maxNumber.setError(gameSettingFormState.getMaxNumberErrorMessage());
                 }
+
+                gameSettingViewModel.setMaxNumber(et_maxNumber.getText().toString());
                 bt_gameStart.setEnabled(gameSettingFormState.isFieldsValid());
             }
         });
@@ -184,7 +186,15 @@ public class GameSettingFragment extends Fragment {
         bt_gameStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(GameSettingFragment.this).navigate(R.id.action_navigation_gameSetting_to_gameFragment);
+                gameSettingViewModel.isSaved().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean savedMaxNumber) {
+                        if(savedMaxNumber){
+                            NavHostFragment.findNavController(GameSettingFragment.this).navigate(R.id.action_navigation_gameSetting_to_gameFragment);
+                        }
+                    }
+                });
+
             }
         });
     }

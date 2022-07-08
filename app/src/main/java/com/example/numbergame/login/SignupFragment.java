@@ -38,13 +38,6 @@ public class SignupFragment extends Fragment {
         super.onCreate(savedInstanceState);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                NavHostFragment.findNavController(SignupFragment.this).navigate(R.id.action_signupFragment_to_loginFragment);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -173,7 +166,7 @@ public class SignupFragment extends Fragment {
             public void onChanged(Boolean isRegistrationSuccessful) {
                 if (isRegistrationSuccessful) {
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
-                    NavHostFragment.findNavController(SignupFragment.this).navigate(R.id.action_signupFragment_to_loginFragment);
+                    NavHostFragment.findNavController(SignupFragment.this).navigateUp();
                     loginViewModel.setRegisterSuccess(false);
                 } else {
                     Toast.makeText(requireContext(), "fail", Toast.LENGTH_SHORT).show();
