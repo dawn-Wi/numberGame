@@ -22,6 +22,11 @@ import android.widget.Toast;
 import com.example.numbergame.GameGridFragment;
 import com.example.numbergame.R;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class GameFragment extends Fragment {
@@ -29,8 +34,8 @@ public class GameFragment extends Fragment {
 
     private Chronometer chronometer;
     private ConstraintLayout linearLayout;
-    private String[] numberButton;
     private int maxNumber;
+    private String[] numberButton;
     private boolean running = false;
 
     public GameFragment() {
@@ -62,12 +67,19 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         chronometer = view.findViewById(R.id.game_chronometer);
         linearLayout = view.findViewById(R.id.linearLayout);
         chronometer.setFormat("%s");
 
+
         maxNumber = Integer.parseInt(gameViewModel.getMaxNumber().toString());
+
+        numberButton = new String[maxNumber];
+        for(int i =1;i<maxNumber;i++){
+            int randomNum=(int)(Math.random()*maxNumber);
+            numberButton[i]=String.valueOf(randomNum);
+
+        }
 
         if (!running) {
             chronometer.setBase(SystemClock.elapsedRealtime());
