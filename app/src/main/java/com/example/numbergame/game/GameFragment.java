@@ -14,20 +14,11 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.example.numbergame.GameGridFragment;
 import com.example.numbergame.R;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.Random;
 
 public class GameFragment extends Fragment {
     private GameViewModel gameViewModel;
@@ -75,10 +66,14 @@ public class GameFragment extends Fragment {
         maxNumber = Integer.parseInt(gameViewModel.getMaxNumber().toString());
 
         numberButton = new String[maxNumber];
-        for(int i =1;i<maxNumber;i++){
-            int randomNum=(int)(Math.random()*maxNumber);
-            numberButton[i]=String.valueOf(randomNum);
-
+        Random r = new Random();
+        for (int i = 0; i < maxNumber; i++) {
+            numberButton[i] = String.valueOf(r.nextInt(maxNumber) + 1);
+            for (int j = 0; j < i; j++) {
+                if (numberButton[i] == numberButton[j]) {
+                    i--;
+                }
+            }
         }
 
         if (!running) {

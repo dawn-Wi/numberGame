@@ -1,19 +1,15 @@
-package com.example.numbergame;
+package com.example.numbergame.game;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.numbergame.databinding.ObjectGameBinding;
-import com.example.numbergame.game.GameViewModel;
-
-import java.util.List;
 
 public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerViewAdapter.ViewHolder> {
 

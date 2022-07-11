@@ -1,4 +1,4 @@
-package com.example.numbergame;
+package com.example.numbergame.game;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,19 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.example.numbergame.game.GameViewModel;
-
-import java.util.List;
+import com.example.numbergame.R;
 
 public class GameGridFragment extends Fragment {
     GameViewModel gameViewModel;
