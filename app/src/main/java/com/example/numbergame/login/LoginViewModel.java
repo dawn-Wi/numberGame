@@ -165,6 +165,10 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    public String getUserId(){
+        return idText;
+    }
+
     public boolean isDisplayNameValid(String displayName) {
         return !(displayName.length() < 2);
     }

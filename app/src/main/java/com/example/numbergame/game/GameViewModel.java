@@ -28,6 +28,14 @@ public class GameViewModel extends ViewModel {
             checkedNumber.setValue(false);
         }
     }
+
+    public boolean finishClick(){
+        if(currentNumber==maxNumber){
+            return true;
+        }else{
+            return false;
+        }
+    }
     //
     //
     //

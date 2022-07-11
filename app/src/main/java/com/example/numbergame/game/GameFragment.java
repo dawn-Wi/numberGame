@@ -34,6 +34,7 @@ public class GameFragment extends Fragment {
     private Chronometer chronometer;
     private RecyclerView rv_numberGrid;
     private boolean running = false;
+    private boolean correctAnswer;
 
     public GameFragment() {
 
@@ -62,17 +63,12 @@ public class GameFragment extends Fragment {
             public void onButtonClicked(GameButtonContent pressed) {
                 //Viewmodel한테 이야기해서 눌러지는게 맞는지 확인...
                 gameViewModel.isNumberValid(pressed);
-                gameViewModel.isCheckNumber().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean isChecked) {
-                        if (isChecked) {
-                            pressed.setClicked(true);
-                            adapter.notifyDataSetChanged();
-                        } else {
-                            pressed.setClicked(false);
-                        }
-                    }
-                });
+                if(correctAnswer){
+                    pressed.setClicked(true);
+                }
+                else{
+                    pressed.setClicked(false);
+                }
                 adapter.notifyDataSetChanged();
             }
         });
@@ -88,7 +84,22 @@ public class GameFragment extends Fragment {
         chronometer = binding.gameChronometer;
         chronometer.setFormat("%s");
 
+        gameViewModel.isCheckNumber().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isChecked) {
+                if (isChecked) {
+                    correctAnswer=true;
+                    adapter.notifyDataSetChanged();
+                    if(gameViewModel.finishClick()){
+                        chronometer.stop();
+                        running=false;
 
+                    }
+                } else {
+                    correctAnswer=false;
+                }
+            }
+        });
 
 
         if (!running) {
