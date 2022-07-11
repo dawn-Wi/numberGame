@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -243,6 +244,7 @@ public class GameSettingFragment extends Fragment
             @Override
             public void onClick(View view)
             {
+                Log.d("asdf", "onClick: adsfsdf");
                 GameSettingFragmentDirections.ActionNavigationGameSettingToGameFragment action = GameSettingFragmentDirections.actionNavigationGameSettingToGameFragment();
                 action.setMaxNumber(gameSettingViewModel.getMaxNumber());
                 NavHostFragment.findNavController(GameSettingFragment.this).navigate(action);
