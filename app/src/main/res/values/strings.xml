@@ -20,7 +20,7 @@
     <string name="bt_signup">Sign Up</string>
     <string name="item_gamesetting">GameSetting</string>
     <string name="item_myrecord">MyRecord</string>
-    <string name="item_readerboard">ReaderBoard</string>
+    <string name="item_leaderboard">LeaderBoard</string>
     <string name="tv_minNumber">Min Number</string>
     <string name="tv_maxNumber">Max Number</string>
     <string name="bt_gameStart">Start</string>

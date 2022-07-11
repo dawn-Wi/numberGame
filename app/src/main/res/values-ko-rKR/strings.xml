@@ -20,7 +20,7 @@
     <string name="bt_signup">회원가입</string>
     <string name="item_gamesetting">게임 설정</string>
     <string name="item_myrecord">내 기록</string>
-    <string name="item_readerboard">순위</string>
+    <string name="item_leaderboard">순위</string>
     <string name="tv_minNumber">최소 숫자</string>
     <string name="tv_maxNumber">최대 숫자</string>
     <string name="bt_gameStart">시작</string>

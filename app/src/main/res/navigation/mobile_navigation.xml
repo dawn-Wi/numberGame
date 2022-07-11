@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/navigation_leaderBoard"
         android:name="com.example.numbergame.ui.Leaderboard.LeaderboardFragment"
-        android:label="@string/item_readerboard"
+        android:label="@string/item_leaderboard"
         tools:layout="@layout/fragment_leaderboard" />
     <fragment
         android:id="@+id/gameFragment"
@@ -35,6 +35,9 @@
             android:name="maxNumber"
             app:argType="integer"
             android:defaultValue="20" />
+        <action
+            android:id="@+id/action_gameFragment_to_navigation_gameSetting"
+            app:destination="@id/navigation_gameSetting" />
     </fragment>
 
 </navigation>

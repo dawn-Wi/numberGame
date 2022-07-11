@@ -5,6 +5,7 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Chronometer;
 
 import androidx.annotation.NonNull;
@@ -12,10 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.numbergame.R;
 import com.example.numbergame.databinding.FragmentGameBinding;
+import com.example.numbergame.login.LoginFragment;
 
 public class GameFragment extends Fragment {
 
@@ -26,6 +30,7 @@ public class GameFragment extends Fragment {
 
     private Chronometer chronometer;
     private RecyclerView rv_numberGrid;
+    private Button bt_home;
     private boolean running = false;
     private boolean correctAnswer;
 
@@ -74,6 +79,8 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        bt_home = binding.gameBtHome;
+        bt_home.setVisibility(View.INVISIBLE);
         chronometer = binding.gameChronometer;
         chronometer.setFormat("%s");
 
@@ -86,6 +93,13 @@ public class GameFragment extends Fragment {
                     if(gameViewModel.finishClick()){
                         chronometer.stop();
                         running=false;
+                        bt_home.setVisibility(View.VISIBLE);
+                        bt_home.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                NavHostFragment.findNavController(GameFragment.this).navigate(R.id.action_gameFragment_to_navigation_gameSetting);
+                            }
+                        });
                         GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()),gameViewModel.getLoggedUserId(),gameViewModel.getMaxNumber());
                         gameViewModel.addRecord(gameRecord);
                     }
