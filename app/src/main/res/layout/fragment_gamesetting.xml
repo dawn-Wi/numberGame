@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/gameSetting_tv_maxNumber"
+        android:id="@+id/gameSetting_tv_maxNumberLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -38,9 +38,9 @@
         android:ems="3"
         android:inputType="number"
         android:maxLength="3"
-        app:layout_constraintBottom_toBottomOf="@+id/gameSetting_tv_maxNumber"
-        app:layout_constraintStart_toEndOf="@+id/gameSetting_tv_maxNumber"
-        app:layout_constraintTop_toTopOf="@+id/gameSetting_tv_maxNumber" />
+        app:layout_constraintBottom_toBottomOf="@+id/gameSetting_tv_maxNumberLabel"
+        app:layout_constraintStart_toEndOf="@+id/gameSetting_tv_maxNumberLabel"
+        app:layout_constraintTop_toTopOf="@+id/gameSetting_tv_maxNumberLabel" />
 
 
     <Button
@@ -50,7 +50,7 @@
         android:layout_marginTop="100dp"
         android:text="@string/bt_gameStart"
         app:layout_constraintEnd_toEndOf="@+id/gameSetting_et_maxNumber"
-        app:layout_constraintStart_toStartOf="@+id/gameSetting_tv_maxNumber"
+        app:layout_constraintStart_toStartOf="@+id/gameSetting_tv_maxNumberLabel"
         app:layout_constraintTop_toBottomOf="@+id/gameSetting_et_maxNumber" />
 
 

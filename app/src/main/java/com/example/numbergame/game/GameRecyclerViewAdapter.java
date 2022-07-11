@@ -1,6 +1,5 @@
 package com.example.numbergame.game;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,48 +10,60 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.numbergame.databinding.ObjectGameBinding;
 
-public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerViewAdapter.ViewHolder> {
+import java.util.List;
 
-    private String[] numberString;
-    private LayoutInflater mInflater;
+public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerViewAdapter.ViewHolder>
+{
 
-    public GameRecyclerViewAdapter(Context context,String[] data){
-        this.mInflater = LayoutInflater.from(context);
-        this.numberString = data;
-    }
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        return new ViewHolder(ObjectGameBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
-    }
+    private GameButtonOnClickListener gameButtonOnClickListener;
+    private List<GameButtonContent> data;
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.numberButton.setText(numberString[position]);
+    public GameRecyclerViewAdapter(List<GameButtonContent> data, GameButtonOnClickListener gameButtonOnClickListener)
+    {
+        this.data = data;
+        this.gameButtonOnClickListener = gameButtonOnClickListener;
     }
 
     @Override
-    public int getItemCount() {
-        return numberString.length;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
+        return new ViewHolder(ObjectGameBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    {
+        holder.gameButtonContent = data.get(position);
+        if(holder.gameButtonContent.isClicked())
+            holder.bt_number.setVisibility(View.INVISIBLE);
+        else
+            holder.bt_number.setVisibility(View.VISIBLE);
+        holder.bt_number.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                gameButtonOnClickListener.onButtonClicked(holder.gameButtonContent);
+            }
+        });
+        holder.bt_number.setText(holder.gameButtonContent.getValue());
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        Button numberButton;
-        public ViewHolder(ObjectGameBinding binding){
+    @Override
+    public int getItemCount()
+    {
+        return data.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder
+    {
+        GameButtonContent gameButtonContent;
+        Button bt_number;
+
+        public ViewHolder(ObjectGameBinding binding)
+        {
             super(binding.getRoot());
-            numberButton = binding.gameNumButton;
-            itemView.setOnClickListener(this);
+            bt_number = binding.gameNumButton;
         }
-
-
-        @Override
-        public void onClick(View view) {
-
-        }
-        String getItem(int id){
-            return numberString[id];
-        }
-
-
     }
 }

@@ -139,7 +139,7 @@ public class LoginFragment extends Fragment {
                     //NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_gameFragment);
                     Intent intent = new Intent(getActivity(), GameMenuActivity.class);
                     startActivity(intent);
-                    Toast.makeText(getActivity().getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity().getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                     et_email.setText(null);

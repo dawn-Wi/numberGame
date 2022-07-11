@@ -7,65 +7,63 @@ import androidx.lifecycle.ViewModel;
 import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
 
-public class GameSettingViewModel extends ViewModel {
-    private final UserRepository userRepository = UserRepository.getInstance();
-    private final MutableLiveData<GameSettingFormState> gameFormState = new MutableLiveData<>(new GameSettingFormState(null,  false));
-    private final MutableLiveData<Boolean> savingMaxNumber = new MutableLiveData<>();
-
+public class GameSettingViewModel extends ViewModel
+{
+    private final MutableLiveData<GameSettingFormState> gameFormState = new MutableLiveData<>(new GameSettingFormState(null, false));
     private String maxNumberText = "";
+    private int maxNumber;
 
-
-    private final MutableLiveData<String> mText;
-
-    public GameSettingViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+    public GameSettingViewModel()
+    {
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
-
-    public void onMaxNumberTextChanged(String changedMaxNumber) {
+    public void onMaxNumberTextChanged(String changedMaxNumber)
+    {
         maxNumberText = changedMaxNumber;
-        if (!isMaxNumberValid(maxNumberText)) {
+        if (!isMaxNumberValid(maxNumberText))
+        {
             gameFormState.setValue(new GameSettingFormState("Please enter a number between 20 and 50", false));
-        } else{
-            gameFormState.setValue(new GameSettingFormState(null,  true));
+        }
+        else
+        {
+            gameFormState.setValue(new GameSettingFormState(null, true));
         }
     }
 
-
-
-    public boolean isMaxNumberValid(String maxNumber) {
-        boolean answer=false;
-        if(maxNumber.toString().length()>0){
-            if(Integer.parseInt(maxNumber.toString())<20 || Integer.parseInt(maxNumber.toString())>50){
-                answer=false;
-            }else {
-                answer=true;
+    private boolean isMaxNumberValid(String maxNumber)
+    {
+        boolean answer = false;
+        if (maxNumber.length() > 0)
+        {
+            if (Integer.parseInt(maxNumber) < 20 || Integer.parseInt(maxNumber) > 50)
+            {
+                answer = false;
+            }
+            else
+            {
+                answer = true;
             }
         }
         return answer;
     }
 
-    public void setMaxNumber(String maxNumber){
-        userRepository.setMaxNumber(maxNumber,result -> {
-            if (result instanceof Result.Success) {
-                savingMaxNumber.setValue(true);
-            } else {
-                savingMaxNumber.setValue(false);
-            }
-        });
+    public void setMaxNumberText(String maxNumber)
+    {
+        if(maxNumber.length() > 0)
+        {
+            maxNumberText = maxNumber;
+            this.maxNumber = Integer.parseInt(maxNumber);
+        }
     }
 
-    public LiveData<GameSettingFormState> getGameSettingFormState() {
+    public LiveData<GameSettingFormState> getGameSettingFormState()
+    {
         return gameFormState;
     }
 
-
-    public LiveData<Boolean> isSaved() {
-        return savingMaxNumber;
+    public int getMaxNumber()
+    {
+        return maxNumber;
     }
 
 }

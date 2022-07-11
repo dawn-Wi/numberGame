@@ -30,6 +30,11 @@
         android:id="@+id/gameFragment"
         android:name="com.example.numbergame.game.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game" >
+        <argument
+            android:name="maxNumber"
+            app:argType="integer"
+            android:defaultValue="20" />
+    </fragment>
 
 </navigation>
