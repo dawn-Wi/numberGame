@@ -3,12 +3,12 @@ package com.example.numbergame.game;
 public class GameRecord {
     private long timestamp;
     private String userId;
-    private long timeTaken;
+    private int buttonNum;
 
-    public GameRecord(long timestamp, String userId, long timeTaken) {
+    public GameRecord(long timestamp, String userId,int buttonNum) {
         this.timestamp = timestamp;
         this.userId = userId;
-        this.timeTaken = timeTaken;
+        this.buttonNum = buttonNum;
     }
 
     public long getTimestamp() {
@@ -27,11 +27,12 @@ public class GameRecord {
         this.userId = userId;
     }
 
-    public long getTimeTaken() {
-        return timeTaken;
+    public int getButtonNum() {
+        return buttonNum;
     }
 
-    public void setTimeTaken(long timeTaken) {
-        this.timeTaken = timeTaken;
+    public void setButtonNum(int buttonNum) {
+        this.buttonNum = buttonNum;
     }
+
 }

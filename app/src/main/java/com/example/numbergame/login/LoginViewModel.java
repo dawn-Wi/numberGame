@@ -27,6 +27,8 @@ public class LoginViewModel extends ViewModel {
     private String loginIdText = "";
     private String loginPasswordText="";
 
+    private String loggedName;
+
     private List<String> userLists;
 
     public void tryLogin(String id, String password) {
@@ -165,8 +167,13 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public String getUserId(){
-        return idText;
+    public void saveRepositoryUserId(String userId){
+        userRepository.saveRepositoryUserId(userId);
+    }
+
+    public void setUserId(String userId){
+        loggedName=userId;
+        saveRepositoryUserId(userId);
     }
 
     public boolean isDisplayNameValid(String displayName) {

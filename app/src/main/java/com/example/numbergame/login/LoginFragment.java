@@ -2,14 +2,6 @@ package com.example.numbergame.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,6 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.numbergame.GameMenuActivity;
 import com.example.numbergame.R;
@@ -59,6 +58,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
+
     }
 
     @Override
@@ -136,10 +136,9 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(Boolean isLoggedIn) {
                 if (isLoggedIn == true) {
-                    //NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_gameFragment);
                     Intent intent = new Intent(getActivity(), GameMenuActivity.class);
                     startActivity(intent);
-                    //Toast.makeText(getActivity().getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                    loginViewModel.setUserId(et_email.getText().toString());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                     et_email.setText(null);
@@ -161,6 +160,8 @@ public class LoginFragment extends Fragment {
                 NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_signupFragment);
             }
         });
+
+
 
 
     }

@@ -106,6 +106,11 @@ public class FirebaseDataSource implements DataSource {
 
     @Override
     public void addRecord(GameRecord toAdd, DataSourceCallback<Result> callback) {
-
+        Map<String, Object> record = new HashMap<String, Object>();
+        record.put("timeStamp",toAdd.getTimestamp());
+        record.put("userId", toAdd.getUserId());
+        record.put("buttonNum", toAdd.getButtonNum());
+        db.collection("totalRecords")
+                .add(record);
     }
 }

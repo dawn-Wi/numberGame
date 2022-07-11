@@ -10,7 +10,6 @@ import com.example.numbergame.UserRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class GameViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
@@ -30,11 +29,23 @@ public class GameViewModel extends ViewModel {
     }
 
     public boolean finishClick(){
-        if(currentNumber==maxNumber){
+        if(currentNumber>maxNumber){
             return true;
         }else{
             return false;
         }
+    }
+
+    public String getLoggedUserId(){
+        return userRepository.sendRepositoryUserId();
+    }
+
+    public void addRecord(GameRecord gameRecord){
+        userRepository.addRecord(gameRecord, result->{
+            if(result instanceof Result.Success){
+
+            }
+        });
     }
     //
     //

@@ -1,12 +1,14 @@
 package com.example.numbergame;
 
 import com.example.numbergame.dataSource.DataSource;
+import com.example.numbergame.dataSource.DataSourceCallback;
+import com.example.numbergame.game.GameRecord;
 
 public class UserRepository {
     private static volatile UserRepository INSTANCE = new UserRepository();
     private DataSource dataSource;
 
-    private String inputMaxNumber;
+    private String loggedUserId;
 
     public static UserRepository getInstance() {
         return INSTANCE;
@@ -24,13 +26,16 @@ public class UserRepository {
         dataSource.getId(callback::onComplete);
     }
 
-    public void setMaxNumber(final String maxNumber, UserRepositoryCallback<Result>callback){
-        inputMaxNumber=maxNumber;
-        callback.onComplete(new Result.Success<String>("Success"));
+    public void saveRepositoryUserId(final String userId){
+        loggedUserId = userId;
     }
 
-    public void getMaxNumber(UserRepositoryCallback<Result>callback){
-        callback.onComplete(new Result.Success<String>(inputMaxNumber));
+    public String sendRepositoryUserId(){
+        return loggedUserId;
+    }
+
+    public void addRecord(final GameRecord gameRecord, UserRepositoryCallback<Result> callback){
+        dataSource.addRecord(gameRecord, callback::onComplete);
     }
 
     public void setDataSource(DataSource ds) {

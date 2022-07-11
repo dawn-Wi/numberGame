@@ -1,6 +1,5 @@
 package com.example.numbergame.game;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -10,19 +9,13 @@ import android.widget.Chronometer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.numbergame.databinding.FragmentGameBinding;
-import com.example.numbergame.ui.GameSetting.GameSettingFragment;
-
-import java.util.List;
 
 public class GameFragment extends Fragment {
 
@@ -93,7 +86,8 @@ public class GameFragment extends Fragment {
                     if(gameViewModel.finishClick()){
                         chronometer.stop();
                         running=false;
-
+                        GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()),gameViewModel.getLoggedUserId(),gameViewModel.getMaxNumber());
+                        gameViewModel.addRecord(gameRecord);
                     }
                 } else {
                     correctAnswer=false;

@@ -1,5 +1,6 @@
 package com.example.numbergame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -32,6 +33,8 @@ public class GameMenuActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_gamemenu);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        Intent intent = getIntent();
+        String userId = intent.getStringExtra("userId");
     }
 
 
