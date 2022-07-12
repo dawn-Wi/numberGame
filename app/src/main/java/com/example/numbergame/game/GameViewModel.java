@@ -14,66 +14,66 @@ import java.util.List;
 public class GameViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
     private MutableLiveData<Boolean> checkedNumber = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> finishGame = new MutableLiveData<>();
 
     private int maxNumber;
     private List<GameButtonContent> gameButtonContentList;
     private int currentNumber;
 
-    public void isNumberValid(GameButtonContent gameButtonContent){
-        if(gameButtonContent.getValue().equals(String.valueOf(currentNumber))){
+    public void isNumberValid(GameButtonContent gameButtonContent) {
+        if (gameButtonContent.getValue().equals(String.valueOf(currentNumber))) {
             currentNumber++;
             checkedNumber.setValue(true);
-        }else{
+        } else {
             checkedNumber.setValue(false);
         }
     }
 
-    public boolean finishClick(){
-        if(currentNumber>maxNumber){
+    public boolean finishClick() {
+        if (currentNumber > maxNumber) {
+            finishGame.setValue(true);
             return true;
-        }else{
+        } else {
+            finishGame.setValue(false);
             return false;
         }
     }
 
-    public String getLoggedUserId(){
+    public String getLoggedUserId() {
         return userRepository.sendRepositoryUserId();
     }
 
-    public void addRecord(GameRecord gameRecord){
-        userRepository.addRecord(gameRecord, result->{
-            if(result instanceof Result.Success){
+    public void addRecord(GameRecord gameRecord) {
+        userRepository.addRecord(gameRecord, result -> {
+            if (result instanceof Result.Success) {
 
             }
         });
     }
-    //
-    //
-    //
-    //
-    //
 
-    public void setupNewGame(int maxNumber)
-    {
-        currentNumber=1;
+    public void setupNewGame(int maxNumber) {
+        currentNumber = 1;
         this.maxNumber = maxNumber;
         gameButtonContentList = new ArrayList<>();
-        for(int i=0; i<maxNumber; i++)
-        {
-            gameButtonContentList.add(new GameButtonContent("" + (i+1),false ));
+        for (int i = 0; i < maxNumber; i++) {
+            gameButtonContentList.add(new GameButtonContent("" + (i + 1), false));
         }
         Collections.shuffle(gameButtonContentList);
     }
 
-    public List<GameButtonContent> getGameButtonContentList()
-    {
+    public List<GameButtonContent> getGameButtonContentList() {
         return gameButtonContentList;
     }
 
-    public int getMaxNumber()
-    {
+    public int getMaxNumber() {
         return maxNumber;
     }
 
-    public LiveData<Boolean> isCheckNumber(){return checkedNumber;}
+    public LiveData<Boolean> isCheckNumber() {
+        return checkedNumber;
+    }
+
+    public LiveData<Boolean> isFinishGame(){
+        return finishGame;
+    }
 }

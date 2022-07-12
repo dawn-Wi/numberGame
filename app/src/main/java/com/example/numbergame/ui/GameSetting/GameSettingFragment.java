@@ -244,7 +244,6 @@ public class GameSettingFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                Log.d("asdf", "onClick: adsfsdf");
                 GameSettingFragmentDirections.ActionNavigationGameSettingToGameFragment action = GameSettingFragmentDirections.actionNavigationGameSettingToGameFragment();
                 action.setMaxNumber(gameSettingViewModel.getMaxNumber());
                 NavHostFragment.findNavController(GameSettingFragment.this).navigate(action);

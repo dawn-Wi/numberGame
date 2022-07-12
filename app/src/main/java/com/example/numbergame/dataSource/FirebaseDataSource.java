@@ -100,8 +100,24 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void getMyRecords(String id, DataSourceCallback<Result> callback) {
-
+    public void getMyRecords(String loggedId, DataSourceCallback<Result> callback) {
+        List<GameRecord> toReturn = new ArrayList<>();
+        db.collection("totalRecords")
+                .get()
+                .addOnCompleteListener(task -> {
+                   if(task.isSuccessful()){
+                       List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                       for(int i=0;i<snaps.size();i++){
+                           if(snaps.get(i).getString("userId").equals(loggedId)){
+                               GameRecord toAdd = new GameRecord((snaps.get(i).getDouble("timeStamp")).longValue(),snaps.get(i).getString("userId"),snaps.get(i).getDouble("buttonNum").intValue());
+                               toReturn.add(toAdd);
+                           }
+                       }
+                       callback.onComplete(new Result.Success<List<GameRecord>>(toReturn));
+                   }else{
+                       callback.onComplete(new Result.Error(task.getException()));
+                   }
+                });
     }
 
     @Override

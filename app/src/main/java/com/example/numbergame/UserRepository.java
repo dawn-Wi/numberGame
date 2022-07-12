@@ -38,6 +38,10 @@ public class UserRepository {
         dataSource.addRecord(gameRecord, callback::onComplete);
     }
 
+    public void getMyRecord(final UserRepositoryCallback callback){
+        dataSource.getMyRecords(loggedUserId, callback::onComplete);
+    }
+
     public void setDataSource(DataSource ds) {
         this.dataSource = ds;
     }

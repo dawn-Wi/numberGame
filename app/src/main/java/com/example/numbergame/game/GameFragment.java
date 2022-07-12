@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.numbergame.R;
 import com.example.numbergame.databinding.FragmentGameBinding;
 import com.example.numbergame.login.LoginFragment;
+import com.example.numbergame.login.SignupFragment;
 
 public class GameFragment extends Fragment {
 
@@ -38,7 +39,6 @@ public class GameFragment extends Fragment {
 
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,6 @@ public class GameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentGameBinding.inflate(inflater, container, false);
         int maxNumber = GameFragmentArgs.fromBundle(getArguments()).getMaxNumber();
         gameViewModel.setupNewGame(maxNumber);
@@ -59,12 +58,10 @@ public class GameFragment extends Fragment {
         adapter = new GameRecyclerViewAdapter(gameViewModel.getGameButtonContentList(), new GameButtonOnClickListener() {
             @Override
             public void onButtonClicked(GameButtonContent pressed) {
-                //Viewmodel한테 이야기해서 눌러지는게 맞는지 확인...
                 gameViewModel.isNumberValid(pressed);
-                if(correctAnswer){
+                if (correctAnswer) {
                     pressed.setClicked(true);
-                }
-                else{
+                } else {
                     pressed.setClicked(false);
                 }
                 adapter.notifyDataSetChanged();
@@ -88,11 +85,11 @@ public class GameFragment extends Fragment {
             @Override
             public void onChanged(Boolean isChecked) {
                 if (isChecked) {
-                    correctAnswer=true;
+                    correctAnswer = true;
                     adapter.notifyDataSetChanged();
-                    if(gameViewModel.finishClick()){
+                    if (gameViewModel.finishClick()) {
                         chronometer.stop();
-                        running=false;
+                        running = false;
                         bt_home.setVisibility(View.VISIBLE);
                         bt_home.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -100,11 +97,19 @@ public class GameFragment extends Fragment {
                                 NavHostFragment.findNavController(GameFragment.this).navigate(R.id.action_gameFragment_to_navigation_gameSetting);
                             }
                         });
-                        GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()),gameViewModel.getLoggedUserId(),gameViewModel.getMaxNumber());
+                        GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()), gameViewModel.getLoggedUserId(), gameViewModel.getMaxNumber());
                         gameViewModel.addRecord(gameRecord);
                     }
                 } else {
-                    correctAnswer=false;
+                    correctAnswer = false;
+                }
+            }
+        });
+        gameViewModel.isFinishGame().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isFinish) {
+                if(isFinish){
+                    NavHostFragment.findNavController(GameFragment.this).navigateUp();
                 }
             }
         });
