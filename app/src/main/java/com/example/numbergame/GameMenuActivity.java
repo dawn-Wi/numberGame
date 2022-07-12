@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,8 +18,6 @@ import com.example.numbergame.databinding.ActivityGamemenuBinding;
 public class GameMenuActivity extends AppCompatActivity {
 
     private ActivityGamemenuBinding binding;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,7 @@ public class GameMenuActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_gamemenu);
         NavigationUI.setupWithNavController(binding.navView, navController);
-        Intent intent = getIntent();
-        String userId = intent.getStringExtra("userId");
+
     }
-
-
 
 }

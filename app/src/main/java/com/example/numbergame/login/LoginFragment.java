@@ -20,9 +20,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.numbergame.GameMenuActivity;
 import com.example.numbergame.R;
+import com.example.numbergame.ui.MyRecord.MyRecordViewModel;
 
 public class LoginFragment extends Fragment {
     private LoginViewModel loginViewModel;
+    private MyRecordViewModel myRecordViewModel;
 
     private EditText et_email;
     private EditText et_password;
@@ -38,6 +40,7 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        myRecordViewModel = new ViewModelProvider(this).get(MyRecordViewModel.class);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -158,6 +161,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_signupFragment);
+
             }
         });
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MyRecordRecyclerViewAdapter extends RecyclerView.Adapter<MyRecordRecyclerViewAdapter.ViewHolder>{
 
-    private final List<GameRecord> recordList;
+    private List<GameRecord> recordList;
     private MyRecordViewModel myRecordViewModel;
 
     public MyRecordRecyclerViewAdapter(List<GameRecord> items,MyRecordViewModel mvm) {
@@ -30,15 +30,20 @@ public class MyRecordRecyclerViewAdapter extends RecyclerView.Adapter<MyRecordRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.timestamp.setText(Math.toIntExact(recordList.get(position).getTimestamp()));
+        holder.timestamp.setText(""+Math.toIntExact(Long.parseLong(""+recordList.get(position).getTimestamp())));
         holder.userId.setText(recordList.get(position).getUserId());
-        holder.buttonNum.setText(recordList.get(position).getButtonNum());
+        holder.buttonNum.setText(""+recordList.get(position).getButtonNum());
     }
 
 
     @Override
     public int getItemCount() {
         return recordList.size();
+    }
+
+    public void setRecordList(List<GameRecord> newRecordList){
+        recordList=newRecordList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -55,8 +60,9 @@ public class MyRecordRecyclerViewAdapter extends RecyclerView.Adapter<MyRecordRe
         }
         @Override
         public String toString(){
-            return super.toString()+"'";
+            return super.toString()+"'"+userId.getText()+"'";
         }
     }
+
 
 }

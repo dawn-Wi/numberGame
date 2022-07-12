@@ -25,7 +25,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -35,6 +37,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.numbergame.R;
 import com.example.numbergame.databinding.FragmentGamesettingBinding;
+import com.example.numbergame.login.LoginViewModel;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -52,6 +55,8 @@ public class GameSettingFragment extends Fragment
     private TextView tv_maxNumber;
     private EditText et_maxNumber;
     private Button bt_gameStart;
+
+    private  long pressedTime = 0;
 
     public GameSettingFragment()
     {
@@ -104,7 +109,19 @@ public class GameSettingFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         gameSettingViewModel = new ViewModelProvider(requireActivity()).get(GameSettingViewModel.class);
-
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                if(System.currentTimeMillis()>pressedTime+2000){
+//                    pressedTime = System.currentTimeMillis();
+//                    Toast.makeText(requireContext(),"Press once more to exit",Toast.LENGTH_SHORT).show();
+//                }else{
+//                    Toast.makeText(requireContext(),"Exit the app",Toast.LENGTH_SHORT).show();
+//                    requireActivity().finish();
+//                }
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -249,6 +266,7 @@ public class GameSettingFragment extends Fragment
                 NavHostFragment.findNavController(GameSettingFragment.this).navigate(action);
             }
         });
+
     }
 
 }

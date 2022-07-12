@@ -3,7 +3,10 @@ package com.example.numbergame.ui.MyRecord;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,6 +28,11 @@ public class MyRecordListFragment extends Fragment {
     private int mColumnCount = 1;
 
     private List<GameRecord> recordList;
+    private MyRecordViewModel myRecordViewModel;
+    private MyRecordRecyclerViewAdapter adapter;
+
+    public MyRecordListFragment() {
+    }
 
     public MyRecordListFragment(List<GameRecord> recordList) {
         this.recordList = recordList;
@@ -52,6 +60,7 @@ public class MyRecordListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_myrecord_list, container, false);
+        myRecordViewModel = new ViewModelProvider(requireActivity()).get(MyRecordViewModel.class);
 
         if(view instanceof RecyclerView){
             Context context = view.getContext();
@@ -61,10 +70,25 @@ public class MyRecordListFragment extends Fragment {
             }else{
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            MyRecordRecyclerViewAdapter adapter = new MyRecordRecyclerViewAdapter(recordList, new ViewModelProvider(requireActivity()).get(MyRecordViewModel.class));
+            adapter = new MyRecordRecyclerViewAdapter(recordList, new ViewModelProvider(requireActivity()).get(MyRecordViewModel.class));
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
+
         }
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        myRecordViewModel.myRecordsLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if(isLoaded){
+                    adapter.setRecordList(myRecordViewModel.getMyRecordList());
+                }
+            }
+        });
     }
 }

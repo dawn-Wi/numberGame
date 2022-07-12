@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -109,7 +110,7 @@ public class FirebaseDataSource implements DataSource {
                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
                        for(int i=0;i<snaps.size();i++){
                            if(snaps.get(i).getString("userId").equals(loggedId)){
-                               GameRecord toAdd = new GameRecord((snaps.get(i).getDouble("timeStamp")).longValue(),snaps.get(i).getString("userId"),snaps.get(i).getDouble("buttonNum").intValue());
+                               GameRecord toAdd = new GameRecord((snaps.get(i).getLong("timeStamp")),loggedId,snaps.get(i).getLong("buttonNum").intValue());
                                toReturn.add(toAdd);
                            }
                        }
@@ -126,6 +127,7 @@ public class FirebaseDataSource implements DataSource {
         record.put("timeStamp",toAdd.getTimestamp());
         record.put("userId", toAdd.getUserId());
         record.put("buttonNum", toAdd.getButtonNum());
+
         db.collection("totalRecords")
                 .add(record);
     }

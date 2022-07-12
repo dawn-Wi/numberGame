@@ -8,23 +8,30 @@ import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
 import com.example.numbergame.game.GameRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecordViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
     private MutableLiveData<Boolean> myRecordsLoaded = new MutableLiveData<>(false);
 
-    private List<GameRecord> recordList;
+    private List<GameRecord> recordList = new ArrayList<>();
 
-    public List<GameRecord> getMyRecord(){
+    public void getMyRecord(){
+
         userRepository.getMyRecord(result->{
            if(result instanceof Result.Success){
                recordList = ((Result.Success<List<GameRecord>>)result).getData();
+               myRecordsLoaded.setValue(true);
            }
-        });
-        myRecordsLoaded.setValue(true);
-        return recordList;
 
+        });
+
+
+    }
+
+    public List<GameRecord> getMyRecordList(){
+        return recordList;
     }
 
     public LiveData<Boolean> myRecordsLoaded(){

@@ -31,31 +31,25 @@ public class MyRecordFragment extends Fragment {
     private ConstraintLayout myFrame;
     private List<GameRecord> recordList;
 
-    public MyRecordFragment(){}
-
-    public static MyRecordFragment newInstance(String param1, String param2) {
-        MyRecordFragment fragment = new MyRecordFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public MyRecordFragment(){}
+//
+//    public static MyRecordFragment newInstance(String param1, String param2) {
+//        MyRecordFragment fragment = new MyRecordFragment();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myRecordViewModel = new ViewModelProvider(requireActivity()).get(MyRecordViewModel.class);
-        myRecordViewModel.getMyRecord();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyrecordBinding.inflate(inflater, container, false);
-        myRecordViewModel.myRecordsLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                new MyRecordFragment();
-            }
-        });
+
         View root = binding.getRoot();
         return root;
     }
@@ -64,6 +58,10 @@ public class MyRecordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         myFrame=binding.myrecordClLayout;
+
+        myRecordViewModel.getMyRecord();
+        recordList = myRecordViewModel.getMyRecordList();
+
 
         FragmentManager fm = getChildFragmentManager();
         Fragment myFrag = MyRecordListFragment.newInstance(1,recordList);

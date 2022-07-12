@@ -18,28 +18,29 @@ public class UserRepository {
         dataSource.tryRegister(id, password, displayName, callback::onComplete);
     }
 
-    public void tryLogin(final String id, final String password, UserRepositoryCallback<Result> callback){
-        dataSource.tryLogin(id, password,callback::onComplete);
+    public void tryLogin(final String id, final String password, UserRepositoryCallback<Result> callback) {
+        dataSource.tryLogin(id, password, callback::onComplete);
     }
 
     public void getId(final UserRepositoryCallback<Result> callback) {
         dataSource.getId(callback::onComplete);
     }
 
-    public void saveRepositoryUserId(final String userId){
+    public void saveRepositoryUserId(final String userId) {
         loggedUserId = userId;
     }
 
-    public String sendRepositoryUserId(){
+    public String sendRepositoryUserId() {
         return loggedUserId;
     }
 
-    public void addRecord(final GameRecord gameRecord, UserRepositoryCallback<Result> callback){
+    public void addRecord(final GameRecord gameRecord, UserRepositoryCallback<Result> callback) {
         dataSource.addRecord(gameRecord, callback::onComplete);
     }
 
-    public void getMyRecord(final UserRepositoryCallback callback){
+    public void getMyRecord(final UserRepositoryCallback callback) {
         dataSource.getMyRecords(loggedUserId, callback::onComplete);
+
     }
 
     public void setDataSource(DataSource ds) {
