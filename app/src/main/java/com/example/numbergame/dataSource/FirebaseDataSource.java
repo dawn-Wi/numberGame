@@ -16,6 +16,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +99,21 @@ public class FirebaseDataSource implements DataSource {
 
     @Override
     public void getAllRecords(DataSourceCallback<Result> callback) {
-
+        List<GameRecord> toReturn = new ArrayList<>();
+        db.collection("totalRecords")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                        for (int i = 0; i < snaps.size(); i++) {
+                            GameRecord toAdd = new GameRecord((snaps.get(i).getLong("timeStamp")), snaps.get(i).getString("userId"), snaps.get(i).getLong("buttonNum").intValue());
+                            toReturn.add(toAdd);
+                        }
+                        callback.onComplete(new Result.Success<List<GameRecord>>(toReturn));
+                    } else {
+                        callback.onComplete(new Result.Error(task.getException()));
+                    }
+                });
     }
 
     @Override
@@ -106,25 +122,25 @@ public class FirebaseDataSource implements DataSource {
         db.collection("totalRecords")
                 .get()
                 .addOnCompleteListener(task -> {
-                   if(task.isSuccessful()){
-                       List<DocumentSnapshot> snaps = task.getResult().getDocuments();
-                       for(int i=0;i<snaps.size();i++){
-                           if(snaps.get(i).getString("userId").equals(loggedId)){
-                               GameRecord toAdd = new GameRecord((snaps.get(i).getLong("timeStamp")),loggedId,snaps.get(i).getLong("buttonNum").intValue());
-                               toReturn.add(toAdd);
-                           }
-                       }
-                       callback.onComplete(new Result.Success<List<GameRecord>>(toReturn));
-                   }else{
-                       callback.onComplete(new Result.Error(task.getException()));
-                   }
+                    if (task.isSuccessful()) {
+                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                        for (int i = 0; i < snaps.size(); i++) {
+                            if (snaps.get(i).getString("userId").equals(loggedId)) {
+                                GameRecord toAdd = new GameRecord((snaps.get(i).getLong("timeStamp")), loggedId, snaps.get(i).getLong("buttonNum").intValue());
+                                toReturn.add(toAdd);
+                            }
+                        }
+                        callback.onComplete(new Result.Success<List<GameRecord>>(toReturn));
+                    } else {
+                        callback.onComplete(new Result.Error(task.getException()));
+                    }
                 });
     }
 
     @Override
     public void addRecord(GameRecord toAdd, DataSourceCallback<Result> callback) {
         Map<String, Object> record = new HashMap<String, Object>();
-        record.put("timeStamp",toAdd.getTimestamp());
+        record.put("timeStamp", toAdd.getTimestamp());
         record.put("userId", toAdd.getUserId());
         record.put("buttonNum", toAdd.getButtonNum());
 

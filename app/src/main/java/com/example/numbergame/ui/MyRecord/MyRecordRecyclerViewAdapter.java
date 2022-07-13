@@ -29,9 +29,9 @@ public class MyRecordRecyclerViewAdapter extends RecyclerView.Adapter<MyRecordRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.timestamp.setText("" + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
+        holder.timestamp.setText("Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
         holder.userId.setText(recordList.get(position).getUserId());
-        holder.buttonNum.setText("" + recordList.get(position).getButtonNum());
+        holder.buttonNum.setText("ButtonNum: " + recordList.get(position).getButtonNum());
     }
 
     @Override

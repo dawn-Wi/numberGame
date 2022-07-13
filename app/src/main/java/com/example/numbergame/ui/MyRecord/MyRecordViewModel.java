@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
 import com.example.numbergame.game.GameRecord;
+import com.example.numbergame.game.GameViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,12 @@ public class MyRecordViewModel extends ViewModel {
     private List<GameRecord> recordList = new ArrayList<>();
 
     public void loadMyRecord(){
-
         userRepository.getMyRecord(result->{
            if(result instanceof Result.Success){
                recordList = ((Result.Success<List<GameRecord>>)result).getData();
                myRecordsLoaded.setValue(true);
            }
-
         });
-
-
     }
 
     public List<GameRecord> getMyRecordList(){
@@ -37,6 +34,5 @@ public class MyRecordViewModel extends ViewModel {
     public LiveData<Boolean> myRecordsLoaded(){
         return myRecordsLoaded;
     }
-
 
 }

@@ -1,7 +1,11 @@
 package com.example.numbergame;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.numbergame.dataSource.DataSource;
 import com.example.numbergame.game.GameRecord;
+import com.example.numbergame.game.GameViewModel;
 
 public class UserRepository {
     private static volatile UserRepository INSTANCE = new UserRepository();
@@ -39,7 +43,10 @@ public class UserRepository {
 
     public void getMyRecord(final UserRepositoryCallback callback) {
         dataSource.getMyRecords(loggedInUserId, callback::onComplete);
+    }
 
+    public void getAllRecords(final UserRepositoryCallback callback){
+        dataSource.getAllRecords(callback::onComplete);
     }
 
     public void setDataSource(DataSource ds) {

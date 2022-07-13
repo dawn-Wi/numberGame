@@ -10,9 +10,13 @@ import android.widget.Chronometer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,11 +30,11 @@ public class GameFragment extends Fragment {
     private GameViewModel gameViewModel;
 
     private GameRecyclerViewAdapter adapter;
+    private ConstraintLayout cl_layout;
     private RecyclerView rv_numberGrid;
     private Button bt_home;
 
     private Chronometer chronometer;
-    private boolean running = false;
     private boolean answerCorrect;
 
     public GameFragment() {
@@ -49,6 +53,7 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         int maxNumber = GameFragmentArgs.fromBundle(getArguments()).getMaxNumber();
         gameViewModel.setupNewGame(maxNumber);
+        cl_layout= binding.gameClLayout;
         rv_numberGrid = binding.gameRvNumberGrid;
         bt_home = binding.gameBtHome;
 
@@ -66,11 +71,6 @@ public class GameFragment extends Fragment {
         chronometer = binding.gameChronometer;
         chronometer.setFormat("%s");
 
-        if (!running) {
-            chronometer.setBase(SystemClock.elapsedRealtime());
-            chronometer.start();
-            running = true;
-        }
         //endregion
 
         //region Observer
@@ -86,12 +86,23 @@ public class GameFragment extends Fragment {
                 }
             }
         });
-        gameViewModel.isGameFinished().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+
+
+        gameViewModel.getGameState().observe(getViewLifecycleOwner(), new Observer<GameViewModel.GameState>() {
             @Override
-            public void onChanged(Boolean isFinish) {
-                if(isFinish){
+            public void onChanged(GameViewModel.GameState gameState) {
+                if (gameState == GameViewModel.GameState.LOADING) {
+                    //화면 안보이게
+                } else if (gameState == GameViewModel.GameState.PLAYING) {
+                    //타이머 작동
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    chronometer.start();
+                }else if(gameState== GameViewModel.GameState.PAUSE){
+
+                }
+                else if (gameState == GameViewModel.GameState.FINISHED) {
+                    //init();
                     chronometer.stop();
-                    running = false;
                     bt_home.setVisibility(View.VISIBLE);
                     GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()), gameViewModel.getLoggedUserId(), gameViewModel.getMaxNumber());
                     gameViewModel.addRecord(gameRecord);
@@ -107,10 +118,25 @@ public class GameFragment extends Fragment {
                 NavHostFragment.findNavController(GameFragment.this).navigate(R.id.action_gameFragment_to_navigation_gameSetting);
             }
         });
+
+        Navigation.findNavController(view)
+                .addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+                    @Override
+                    public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
+                        if(navDestination.getId()==R.id.gameFragment){
+                            gameViewModel.resume();
+                        }else if(navDestination.getId()==R.id.navigation_myRecord){
+                            gameViewModel.pause();
+                        }else if(navDestination.getId()==R.id.navigation_leaderBoard){
+                            gameViewModel.pause();
+                        }else if(navDestination.getId()==R.id.navigation_gameSetting){
+                        }
+                    }
+                });
         //endregion
     }
 
-    private void init(){
+    private void init() {
 
         rv_numberGrid.setLayoutManager(new GridLayoutManager(requireContext(), 5));
         adapter = new GameRecyclerViewAdapter(gameViewModel.getGameButtonContentList(), new GameButtonOnClickListener() {

@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rank_list"
-    android:name="com.example.buttonreaction.RankListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.MyRecord.MyRecordListFragment"
-    tools:listitem="@layout/object_myrecord" />
+    tools:listitem="@layout/object_leaderboard" />

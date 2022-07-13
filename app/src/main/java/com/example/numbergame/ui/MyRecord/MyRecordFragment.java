@@ -25,15 +25,6 @@ public class MyRecordFragment extends Fragment {
     private ConstraintLayout cl_myFrame;
     private List<GameRecord> recordList;
 
-//    public MyRecordFragment(){}
-//
-//    public static MyRecordFragment newInstance(String param1, String param2) {
-//        MyRecordFragment fragment = new MyRecordFragment();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
