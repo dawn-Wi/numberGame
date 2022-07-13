@@ -24,8 +24,8 @@ public class GameFragment extends Fragment {
 
     private FragmentGameBinding binding;
     private GameViewModel gameViewModel;
-    private GameRecyclerViewAdapter adapter;
 
+    private GameRecyclerViewAdapter adapter;
     private RecyclerView rv_numberGrid;
     private Button bt_home;
 
@@ -48,11 +48,11 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         int maxNumber = GameFragmentArgs.fromBundle(getArguments()).getMaxNumber();
+        gameViewModel.setupNewGame(maxNumber);
         rv_numberGrid = binding.gameRvNumberGrid;
         bt_home = binding.gameBtHome;
-        init();
 
-        gameViewModel.setupNewGame(maxNumber);
+        init();
 
         return binding.getRoot();
     }
@@ -80,20 +80,20 @@ public class GameFragment extends Fragment {
                 if (isCorrect) {
                     answerCorrect = true;
                     adapter.notifyDataSetChanged();
+
                 } else {
                     answerCorrect = false;
                 }
             }
         });
-
         gameViewModel.isGameFinished().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isFinished) {
-                if (isFinished) {
+            public void onChanged(Boolean isFinish) {
+                if(isFinish){
                     chronometer.stop();
                     running = false;
                     bt_home.setVisibility(View.VISIBLE);
-                    GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()), gameViewModel.getLoggedInUserId(), gameViewModel.getMaxNumber());
+                    GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()), gameViewModel.getLoggedUserId(), gameViewModel.getMaxNumber());
                     gameViewModel.addRecord(gameRecord);
                 }
             }
@@ -110,8 +110,8 @@ public class GameFragment extends Fragment {
         //endregion
     }
 
-    private void init() {
-        //Adapter
+    private void init(){
+
         rv_numberGrid.setLayoutManager(new GridLayoutManager(requireContext(), 5));
         adapter = new GameRecyclerViewAdapter(gameViewModel.getGameButtonContentList(), new GameButtonOnClickListener() {
             @Override
@@ -126,8 +126,6 @@ public class GameFragment extends Fragment {
             }
         });
         rv_numberGrid.setAdapter(adapter);
-
-        //Fragment
-
     }
+
 }

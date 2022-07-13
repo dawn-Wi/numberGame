@@ -29,7 +29,7 @@ public class UserRepository {
         loggedInUserId = userId;
     }
 
-    public String getLoggedInUserId() {
+    public String sendRepositoryUserId() {
         return loggedInUserId;
     }
 
@@ -49,4 +49,5 @@ public class UserRepository {
     public interface UserRepositoryCallback<Result> {
         void onComplete(Result result);
     }
+
 }

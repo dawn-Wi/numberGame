@@ -22,18 +22,17 @@ public class MyRecordFragment extends Fragment {
 
     private FragmentMyrecordBinding binding;
     private MyRecordViewModel myRecordViewModel;
-
     private ConstraintLayout cl_myFrame;
     private List<GameRecord> recordList;
 
-    //    public MyRecordFragment(){}
-    //
-    //    public static MyRecordFragment newInstance(String param1, String param2) {
-    //        MyRecordFragment fragment = new MyRecordFragment();
-    //        Bundle args = new Bundle();
-    //        fragment.setArguments(args);
-    //        return fragment;
-    //    }
+//    public MyRecordFragment(){}
+//
+//    public static MyRecordFragment newInstance(String param1, String param2) {
+//        MyRecordFragment fragment = new MyRecordFragment();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class MyRecordFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyrecordBinding.inflate(inflater, container, false);
-        cl_myFrame = binding.myrecordClLayout;
+        cl_myFrame =binding.myrecordClLayout;
 
         init();
 
@@ -57,11 +56,11 @@ public class MyRecordFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init() {
+    private void init(){
         myRecordViewModel.loadMyRecord();
         recordList = myRecordViewModel.getMyRecordList();
         FragmentManager fm = getChildFragmentManager();
-        Fragment myFrag = MyRecordListFragment.newInstance(1, recordList);
+        Fragment myFrag = MyRecordListFragment.newInstance(1,recordList);
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(cl_myFrame.getId(), myFrag);
         transaction.commit();

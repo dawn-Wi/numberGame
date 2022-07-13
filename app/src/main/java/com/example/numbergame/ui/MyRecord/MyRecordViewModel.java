@@ -17,24 +17,24 @@ public class MyRecordViewModel extends ViewModel {
 
     private List<GameRecord> recordList = new ArrayList<>();
 
-    public void loadMyRecord() {
+    public void loadMyRecord(){
 
-        userRepository.getMyRecord(result -> {
-            if (result instanceof Result.Success) {
-                recordList = ((Result.Success<List<GameRecord>>) result).getData();
-                myRecordsLoaded.setValue(true);
-            }
+        userRepository.getMyRecord(result->{
+           if(result instanceof Result.Success){
+               recordList = ((Result.Success<List<GameRecord>>)result).getData();
+               myRecordsLoaded.setValue(true);
+           }
 
         });
 
 
     }
 
-    public List<GameRecord> getMyRecordList() {
+    public List<GameRecord> getMyRecordList(){
         return recordList;
     }
 
-    public LiveData<Boolean> myRecordsLoaded() {
+    public LiveData<Boolean> myRecordsLoaded(){
         return myRecordsLoaded;
     }
 

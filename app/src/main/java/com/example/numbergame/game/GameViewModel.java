@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
 
-import java.lang.ref.PhantomReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +16,6 @@ public class GameViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> pressedButtonCorrect = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> gameFinished = new MutableLiveData<>();
-    private MutableLiveData<GameState> myState = new MutableLiveData<>();
 
     private int maxNumber;
     private List<GameButtonContent> gameButtonContentList;
@@ -42,7 +40,6 @@ public class GameViewModel extends ViewModel {
     }
 
     public void setupNewGame(int maxNumber) {
-        myState.setValue(GameState.LOADING);
         currentNumber = 1;
         this.maxNumber = maxNumber;
         gameButtonContentList = new ArrayList<>();
@@ -50,13 +47,11 @@ public class GameViewModel extends ViewModel {
             gameButtonContentList.add(new GameButtonContent("" + (i + 1), false));
         }
         Collections.shuffle(gameButtonContentList);
-        myState.setValue(GameState.PLAYING);
     }
 
     private void checkIfFinished() {
         if (currentNumber > maxNumber) {
             gameFinished.setValue(true);
-            myState.setValue(GameState.FINISHED);
         } else {
             gameFinished.setValue(false);
         }
@@ -70,23 +65,16 @@ public class GameViewModel extends ViewModel {
         return maxNumber;
     }
 
-    public String getLoggedInUserId() {
-        return userRepository.getLoggedInUserId();
+    public String getLoggedUserId() {
+        return userRepository.sendRepositoryUserId();
     }
+
 
     public LiveData<Boolean> isPressedButtonCorrect() {
         return pressedButtonCorrect;
     }
 
-    public LiveData<Boolean> isGameFinished() {
+    public LiveData<Boolean> isGameFinished(){
         return gameFinished;
-    }
-
-    public LiveData<GameState> getGameState(){ return myState;}
-
-    public enum GameState{
-        LOADING,
-        PLAYING,
-        FINISHED
     }
 }

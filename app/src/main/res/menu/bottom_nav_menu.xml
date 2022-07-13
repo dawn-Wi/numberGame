@@ -11,7 +11,7 @@
         android:id="@+id/navigation_myRecord"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/item_myrecord"
-        android:menuCategory="secondary" />
+        android:menuCategory="secondary"/>
 
     <item
         android:id="@+id/navigation_leaderBoard"
