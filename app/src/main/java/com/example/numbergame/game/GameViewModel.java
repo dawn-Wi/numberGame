@@ -7,40 +7,30 @@ import androidx.lifecycle.ViewModel;
 import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
 
+import java.lang.ref.PhantomReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class GameViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
-    private MutableLiveData<Boolean> checkedNumber = new MutableLiveData<>(false);
-    private MutableLiveData<Boolean> finishGame = new MutableLiveData<>();
+
+    private MutableLiveData<Boolean> pressedButtonCorrect = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> gameFinished = new MutableLiveData<>();
+    private MutableLiveData<GameState> myState = new MutableLiveData<>();
 
     private int maxNumber;
     private List<GameButtonContent> gameButtonContentList;
     private int currentNumber;
 
-    public void isNumberValid(GameButtonContent gameButtonContent) {
+    public void checkPressedButtonIsCorrect(GameButtonContent gameButtonContent) {
         if (gameButtonContent.getValue().equals(String.valueOf(currentNumber))) {
+            pressedButtonCorrect.setValue(true);
+            checkIfFinished();
             currentNumber++;
-            checkedNumber.setValue(true);
         } else {
-            checkedNumber.setValue(false);
+            pressedButtonCorrect.setValue(false);
         }
-    }
-
-    public boolean finishClick() {
-        if (currentNumber > maxNumber) {
-            finishGame.setValue(true);
-            return true;
-        } else {
-            finishGame.setValue(false);
-            return false;
-        }
-    }
-
-    public String getLoggedUserId() {
-        return userRepository.sendRepositoryUserId();
     }
 
     public void addRecord(GameRecord gameRecord) {
@@ -52,6 +42,7 @@ public class GameViewModel extends ViewModel {
     }
 
     public void setupNewGame(int maxNumber) {
+        myState.setValue(GameState.LOADING);
         currentNumber = 1;
         this.maxNumber = maxNumber;
         gameButtonContentList = new ArrayList<>();
@@ -59,6 +50,16 @@ public class GameViewModel extends ViewModel {
             gameButtonContentList.add(new GameButtonContent("" + (i + 1), false));
         }
         Collections.shuffle(gameButtonContentList);
+        myState.setValue(GameState.PLAYING);
+    }
+
+    private void checkIfFinished() {
+        if (currentNumber > maxNumber) {
+            gameFinished.setValue(true);
+            myState.setValue(GameState.FINISHED);
+        } else {
+            gameFinished.setValue(false);
+        }
     }
 
     public List<GameButtonContent> getGameButtonContentList() {
@@ -69,11 +70,23 @@ public class GameViewModel extends ViewModel {
         return maxNumber;
     }
 
-    public LiveData<Boolean> isCheckNumber() {
-        return checkedNumber;
+    public String getLoggedInUserId() {
+        return userRepository.getLoggedInUserId();
     }
 
-    public LiveData<Boolean> isFinishGame(){
-        return finishGame;
+    public LiveData<Boolean> isPressedButtonCorrect() {
+        return pressedButtonCorrect;
+    }
+
+    public LiveData<Boolean> isGameFinished() {
+        return gameFinished;
+    }
+
+    public LiveData<GameState> getGameState(){ return myState;}
+
+    public enum GameState{
+        LOADING,
+        PLAYING,
+        FINISHED
     }
 }

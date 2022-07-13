@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_gamesetting" >
         <action
             android:id="@+id/action_navigation_gameSetting_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:popUpTo="@id/navigation_gameSetting"/>
     </fragment>
 
     <fragment

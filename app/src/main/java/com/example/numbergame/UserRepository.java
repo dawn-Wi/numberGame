@@ -1,14 +1,13 @@
 package com.example.numbergame;
 
 import com.example.numbergame.dataSource.DataSource;
-import com.example.numbergame.dataSource.DataSourceCallback;
 import com.example.numbergame.game.GameRecord;
 
 public class UserRepository {
     private static volatile UserRepository INSTANCE = new UserRepository();
     private DataSource dataSource;
 
-    private String loggedUserId;
+    private String loggedInUserId;
 
     public static UserRepository getInstance() {
         return INSTANCE;
@@ -27,11 +26,11 @@ public class UserRepository {
     }
 
     public void saveRepositoryUserId(final String userId) {
-        loggedUserId = userId;
+        loggedInUserId = userId;
     }
 
-    public String sendRepositoryUserId() {
-        return loggedUserId;
+    public String getLoggedInUserId() {
+        return loggedInUserId;
     }
 
     public void addRecord(final GameRecord gameRecord, UserRepositoryCallback<Result> callback) {
@@ -39,7 +38,7 @@ public class UserRepository {
     }
 
     public void getMyRecord(final UserRepositoryCallback callback) {
-        dataSource.getMyRecords(loggedUserId, callback::onComplete);
+        dataSource.getMyRecords(loggedInUserId, callback::onComplete);
 
     }
 
@@ -50,5 +49,4 @@ public class UserRepository {
     public interface UserRepositoryCallback<Result> {
         void onComplete(Result result);
     }
-
 }

@@ -109,19 +109,19 @@ public class GameSettingFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         gameSettingViewModel = new ViewModelProvider(requireActivity()).get(GameSettingViewModel.class);
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                if(System.currentTimeMillis()>pressedTime+2000){
-//                    pressedTime = System.currentTimeMillis();
-//                    Toast.makeText(requireContext(),"Press once more to exit",Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(requireContext(),"Exit the app",Toast.LENGTH_SHORT).show();
-//                    requireActivity().finish();
-//                }
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(System.currentTimeMillis()>pressedTime+2000){
+                    pressedTime = System.currentTimeMillis();
+                    Toast.makeText(requireContext(),"Press once more to exit",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(requireContext(),"Exit the app",Toast.LENGTH_SHORT).show();
+                    requireActivity().finish();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,

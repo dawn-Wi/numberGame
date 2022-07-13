@@ -12,57 +12,54 @@ import com.example.numbergame.game.GameRecord;
 import java.util.List;
 
 
-public class MyRecordRecyclerViewAdapter extends RecyclerView.Adapter<MyRecordRecyclerViewAdapter.ViewHolder>{
+public class MyRecordRecyclerViewAdapter extends RecyclerView.Adapter<MyRecordRecyclerViewAdapter.ViewHolder> {
 
     private List<GameRecord> recordList;
     private MyRecordViewModel myRecordViewModel;
 
-    public MyRecordRecyclerViewAdapter(List<GameRecord> items,MyRecordViewModel mvm) {
+    public MyRecordRecyclerViewAdapter(List<GameRecord> items, MyRecordViewModel mvm) {
         recordList = items;
-        myRecordViewModel= mvm;
+        myRecordViewModel = mvm;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        return new ViewHolder(ObjectMyrecordBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(ObjectMyrecordBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
-
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.timestamp.setText(""+Math.toIntExact(Long.parseLong(""+recordList.get(position).getTimestamp())));
+        holder.timestamp.setText("" + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
         holder.userId.setText(recordList.get(position).getUserId());
-        holder.buttonNum.setText(""+recordList.get(position).getButtonNum());
+        holder.buttonNum.setText("" + recordList.get(position).getButtonNum());
     }
-
 
     @Override
     public int getItemCount() {
         return recordList.size();
     }
 
-    public void setRecordList(List<GameRecord> newRecordList){
-        recordList=newRecordList;
+    public void setRecordList(List<GameRecord> newRecordList) {
+        recordList = newRecordList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView timestamp;
         public final TextView userId;
         public final TextView buttonNum;
 
-
-        public ViewHolder(ObjectMyrecordBinding binding){
+        public ViewHolder(ObjectMyrecordBinding binding) {
             super(binding.getRoot());
             timestamp = binding.myrecordTvRecord;
             userId = binding.myrecordTvUserId;
             buttonNum = binding.myrecordTvButtonNum;
         }
+
         @Override
-        public String toString(){
-            return super.toString()+"'"+userId.getText()+"'";
+        public String toString() {
+            return super.toString() + "'" + userId.getText() + "'";
         }
     }
-
 
 }
