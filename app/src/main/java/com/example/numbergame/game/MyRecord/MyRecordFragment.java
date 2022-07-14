@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.MyRecord;
+package com.example.numbergame.game.MyRecord;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

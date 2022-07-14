@@ -1,4 +1,4 @@
-package com.example.numbergame.game;
+package com.example.numbergame.game.PlayGame;
 
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -23,6 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.numbergame.R;
 import com.example.numbergame.databinding.FragmentGameBinding;
+import com.example.numbergame.game.GameButtonContent;
+import com.example.numbergame.game.GameButtonOnClickListener;
+import com.example.numbergame.game.GameRecord;
+import com.example.numbergame.game.NumberParser;
 
 public class GameFragment extends Fragment {
 
@@ -53,7 +57,7 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         int maxNumber = GameFragmentArgs.fromBundle(getArguments()).getMaxNumber();
         gameViewModel.setupNewGame(maxNumber);
-        cl_layout= binding.gameClLayout;
+        cl_layout = binding.gameClLayout;
         rv_numberGrid = binding.gameRvNumberGrid;
         bt_home = binding.gameBtHome;
 
@@ -97,10 +101,9 @@ public class GameFragment extends Fragment {
                     //타이머 작동
                     chronometer.setBase(SystemClock.elapsedRealtime());
                     chronometer.start();
-                }else if(gameState== GameViewModel.GameState.PAUSE){
+                } else if (gameState == GameViewModel.GameState.PAUSE) {
 
-                }
-                else if (gameState == GameViewModel.GameState.FINISHED) {
+                } else if (gameState == GameViewModel.GameState.FINISHED) {
                     //init();
                     chronometer.stop();
                     bt_home.setVisibility(View.VISIBLE);
@@ -123,13 +126,11 @@ public class GameFragment extends Fragment {
                 .addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
                     @Override
                     public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                        if(navDestination.getId()==R.id.gameFragment){
+                        if (navDestination.getId() == R.id.gameFragment) {
                             gameViewModel.resume();
-                        }else if(navDestination.getId()==R.id.navigation_myRecord){
+                        } else if (navDestination.getId() == R.id.navigation_myRecord || navDestination.getId() == R.id.navigation_leaderBoard) {
                             gameViewModel.pause();
-                        }else if(navDestination.getId()==R.id.navigation_leaderBoard){
-                            gameViewModel.pause();
-                        }else if(navDestination.getId()==R.id.navigation_gameSetting){
+                        } else if (navDestination.getId() == R.id.navigation_gameSetting) {
                         }
                     }
                 });

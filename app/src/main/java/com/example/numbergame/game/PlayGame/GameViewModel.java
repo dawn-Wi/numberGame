@@ -1,4 +1,4 @@
-package com.example.numbergame.game;
+package com.example.numbergame.game.PlayGame;
 
 import android.content.pm.PackageManager;
 
@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
+import com.example.numbergame.game.GameButtonContent;
+import com.example.numbergame.game.GameRecord;
 
 import java.net.PortUnreachableException;
 import java.util.ArrayList;

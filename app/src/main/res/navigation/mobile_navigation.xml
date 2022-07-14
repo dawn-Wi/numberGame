@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_gameSetting"
-        android:name="com.example.numbergame.ui.GameSetting.GameSettingFragment"
+        android:name="com.example.numbergame.game.GameSetting.GameSettingFragment"
         android:label="@string/item_gamesetting"
         tools:layout="@layout/fragment_gamesetting" >
         <action
@@ -18,18 +18,18 @@
 
     <fragment
         android:id="@+id/navigation_myRecord"
-        android:name="com.example.numbergame.ui.MyRecord.MyRecordFragment"
+        android:name="com.example.numbergame.game.MyRecord.MyRecordFragment"
         android:label="@string/item_myrecord"
         tools:layout="@layout/fragment_myrecord" />
 
     <fragment
         android:id="@+id/navigation_leaderBoard"
-        android:name="com.example.numbergame.ui.Leaderboard.LeaderboardFragment"
+        android:name="com.example.numbergame.game.Leaderboard.LeaderboardFragment"
         android:label="@string/item_leaderboard"
         tools:layout="@layout/fragment_leaderboard" />
     <fragment
         android:id="@+id/gameFragment"
-        android:name="com.example.numbergame.game.GameFragment"
+        android:name="com.example.numbergame.game.PlayGame.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" >
         <argument

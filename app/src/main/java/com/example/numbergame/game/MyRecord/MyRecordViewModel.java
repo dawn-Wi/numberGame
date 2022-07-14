@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.MyRecord;
+package com.example.numbergame.game.MyRecord;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
 import com.example.numbergame.game.GameRecord;
-import com.example.numbergame.game.GameViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

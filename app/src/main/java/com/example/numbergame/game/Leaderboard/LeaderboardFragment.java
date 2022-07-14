@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.Leaderboard;
+package com.example.numbergame.game.Leaderboard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,13 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.numbergame.databinding.FragmentLeaderboardBinding;
 import com.example.numbergame.game.GameRecord;
-import com.example.numbergame.ui.MyRecord.MyRecordListFragment;
-import com.example.numbergame.ui.MyRecord.MyRecordRecyclerViewAdapter;
-import com.example.numbergame.ui.MyRecord.MyRecordViewModel;
 
 import java.util.List;
 

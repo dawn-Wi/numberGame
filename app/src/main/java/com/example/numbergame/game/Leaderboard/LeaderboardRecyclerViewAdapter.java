@@ -1,14 +1,12 @@
-package com.example.numbergame.ui.Leaderboard;
+package com.example.numbergame.game.Leaderboard;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.numbergame.databinding.ObjectLeaderboardBinding;
-import com.example.numbergame.databinding.ObjectMyrecordBinding;
 import com.example.numbergame.game.GameRecord;
 
 import java.util.List;

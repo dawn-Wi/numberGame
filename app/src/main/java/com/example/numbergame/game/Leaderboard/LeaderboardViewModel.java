@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.Leaderboard;
+package com.example.numbergame.game.Leaderboard;
 
 import android.os.Build;
 
@@ -12,10 +12,8 @@ import com.example.numbergame.UserRepository;
 import com.example.numbergame.game.GameRecord;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collector;
 
 public class LeaderboardViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();

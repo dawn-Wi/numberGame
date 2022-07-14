@@ -1,11 +1,8 @@
-package com.example.numbergame.ui.GameSetting;
+package com.example.numbergame.game.GameSetting;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.numbergame.Result;
-import com.example.numbergame.UserRepository;
 
 public class GameSettingViewModel extends ViewModel
 {

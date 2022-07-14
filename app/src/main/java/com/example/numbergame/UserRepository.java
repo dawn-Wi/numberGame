@@ -1,11 +1,7 @@
 package com.example.numbergame;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.numbergame.dataSource.DataSource;
 import com.example.numbergame.game.GameRecord;
-import com.example.numbergame.game.GameViewModel;
 
 public class UserRepository {
     private static volatile UserRepository INSTANCE = new UserRepository();

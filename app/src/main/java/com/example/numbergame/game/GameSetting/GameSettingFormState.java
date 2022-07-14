@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.GameSetting;
+package com.example.numbergame.game.GameSetting;
 
 public class GameSettingFormState {
     private final String maxNumberErrorMessage;

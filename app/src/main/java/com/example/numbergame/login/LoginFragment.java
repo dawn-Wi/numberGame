@@ -20,7 +20,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.numbergame.GameMenuActivity;
 import com.example.numbergame.R;
-import com.example.numbergame.ui.MyRecord.MyRecordViewModel;
+import com.example.numbergame.game.MyRecord.MyRecordViewModel;
 
 public class LoginFragment extends Fragment {
     private LoginViewModel loginViewModel;

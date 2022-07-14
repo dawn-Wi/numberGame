@@ -1,4 +1,4 @@
-package com.example.numbergame.ui.GameSetting;
+package com.example.numbergame.game.GameSetting;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +32,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.numbergame.R;
 import com.example.numbergame.databinding.FragmentGamesettingBinding;
-import com.example.numbergame.login.LoginViewModel;
 
 import java.util.ArrayList;
 import java.util.Locale;
