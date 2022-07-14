@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_gameSetting">
+
+    <fragment
+        android:id="@+id/navigation_gameSetting"
+        android:name="com.example.numbergame.game.GameSetting.GameSettingFragment"
+        android:label="@string/item_gamesetting"
+        tools:layout="@layout/fragment_gamesetting" >
+        <action
+            android:id="@+id/action_navigation_gameSetting_to_gameFragment"
+            app:destination="@id/gameFragment"
+            app:popUpTo="@id/navigation_gameSetting"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_myRecord"
+        android:name="com.example.numbergame.game.MyRecord.MyRecordFragment"
+        android:label="@string/item_myrecord"
+        tools:layout="@layout/fragment_myrecord" />
+
+    <fragment
+        android:id="@+id/navigation_leaderBoard"
+        android:name="com.example.numbergame.game.Leaderboard.LeaderboardFragment"
+        android:label="@string/item_leaderboard"
+        tools:layout="@layout/fragment_leaderboard" />
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.example.numbergame.game.PlayGame.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" >
+        <argument
+            android:name="maxNumber"
+            app:argType="integer"
+            android:defaultValue="20" />
+        <action
+            android:id="@+id/action_gameFragment_to_navigation_gameSetting"
+            app:destination="@id/navigation_gameSetting" />
+    </fragment>
+
+</navigation>

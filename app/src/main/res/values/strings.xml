@@ -2,4 +2,28 @@
     <string name="app_name">numberGame</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="et_email">Email</string>
+    <string name="et_password">Password</string>
+    <string name="et_passwordCheck">Password Check</string>
+    <string name="et_name">Name</string>
+    <string name="tv_password">Password</string>
+    <string name="tv_passwordCheck">Password Check</string>
+    <string name="tv_name">Name</string>
+    <string name="by_signup">Sign up</string>
+    <string name="bt_checkId">Check Id</string>
+    <string name="tv_email">Email</string>
+    <string name="title_activity_game_menu">GameMenu</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="bt_signin">Sign In</string>
+    <string name="bt_signup">Sign Up</string>
+    <string name="item_gamesetting">GameSetting</string>
+    <string name="item_myrecord">MyRecord</string>
+    <string name="item_leaderboard">LeaderBoard</string>
+    <string name="tv_minNumber">Min Number</string>
+    <string name="tv_maxNumber">Max Number</string>
+    <string name="bt_gameStart">Start</string>
+    <string name="korean">Korean</string>
+    <string name="english">english</string>
 </resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_gameSetting"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/item_gamesetting"
+        android:menuCategory="secondary"/>
+
+    <item
+        android:id="@+id/navigation_myRecord"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/item_myrecord"
+        android:menuCategory="secondary"/>
+
+    <item
+        android:id="@+id/navigation_leaderBoard"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/item_leaderboard"
+        android:menuCategory="secondary"/>
+
+</menu>
