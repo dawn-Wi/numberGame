@@ -1,6 +1,6 @@
 package com.example.numbergame.game;
 
-public class GameRecord {
+public class GameRecord implements Comparable<GameRecord>{
     private long timestamp;
     private String userId;
     private int buttonNum;
@@ -9,6 +9,14 @@ public class GameRecord {
         this.timestamp = timestamp;
         this.userId = userId;
         this.buttonNum = buttonNum;
+    }
+
+    @Override
+    public int compareTo(GameRecord arg0){
+        long targetTimeStamp = arg0.getTimestamp();
+        if(timestamp == targetTimeStamp) return 0;
+        else if(timestamp>targetTimeStamp) return 1;
+        else return -1;
     }
 
     public long getTimestamp() {

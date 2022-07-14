@@ -1,5 +1,8 @@
 package com.example.numbergame.ui.Leaderboard;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -20,15 +23,16 @@ public class LeaderboardViewModel extends ViewModel {
 
     private List<GameRecord> recordList = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void loadAllRecord(){
         userRepository.getAllRecords(result->{
             if(result instanceof Result.Success){
                 recordList = ((Result.Success<List<GameRecord>>)result).getData();
                 allRecordsLoaded.setValue(true);
+                recordList.sort(Comparator.naturalOrder());
             }
         });
     }
-
 
     public List<GameRecord> getAllRecordList(){
         return recordList;
