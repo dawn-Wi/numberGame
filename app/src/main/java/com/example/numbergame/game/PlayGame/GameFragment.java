@@ -2,6 +2,7 @@ package com.example.numbergame.game.PlayGame;
 
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class GameFragment extends Fragment {
 
     private Chronometer chronometer;
     private boolean answerCorrect;
+    private long pauseTime, reStartTime=0;
 
     public GameFragment() {
 
@@ -49,14 +51,16 @@ public class GameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameViewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+        int maxNumber = GameFragmentArgs.fromBundle(getArguments()).getMaxNumber();
+        gameViewModel.setupNewGame(maxNumber);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
-        int maxNumber = GameFragmentArgs.fromBundle(getArguments()).getMaxNumber();
-        gameViewModel.setupNewGame(maxNumber);
+
         cl_layout = binding.gameClLayout;
         rv_numberGrid = binding.gameRvNumberGrid;
         bt_home = binding.gameBtHome;
@@ -91,20 +95,21 @@ public class GameFragment extends Fragment {
             }
         });
 
-
         gameViewModel.getGameState().observe(getViewLifecycleOwner(), new Observer<GameViewModel.GameState>() {
             @Override
             public void onChanged(GameViewModel.GameState gameState) {
-                if (gameState == GameViewModel.GameState.LOADING) {
-                    //화면 안보이게
-                } else if (gameState == GameViewModel.GameState.PLAYING) {
-                    //타이머 작동
-                    chronometer.setBase(SystemClock.elapsedRealtime());
+                if (gameState == GameViewModel.GameState.PLAYING) {
+                    if(reStartTime<=0){
+                        chronometer.setBase(SystemClock.elapsedRealtime());
+
+                    }else{
+                        chronometer.setBase(SystemClock.elapsedRealtime()-gameViewModel.getPauseTime());
+                    }
                     chronometer.start();
                 } else if (gameState == GameViewModel.GameState.PAUSE) {
-
+                    reStartTime = SystemClock.elapsedRealtime() - pauseTime;
                 } else if (gameState == GameViewModel.GameState.FINISHED) {
-                    //init();
+                    reStartTime=0;
                     chronometer.stop();
                     bt_home.setVisibility(View.VISIBLE);
                     GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()), gameViewModel.getLoggedUserId(), gameViewModel.getMaxNumber());
@@ -128,17 +133,22 @@ public class GameFragment extends Fragment {
                     public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
                         if (navDestination.getId() == R.id.gameFragment) {
                             gameViewModel.resume();
-                        } else if (navDestination.getId() == R.id.navigation_myRecord || navDestination.getId() == R.id.navigation_leaderBoard) {
-                            gameViewModel.pause();
-                        } else if (navDestination.getId() == R.id.navigation_gameSetting) {
                         }
                     }
                 });
         //endregion
     }
 
-    private void init() {
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("pause", "onPause: pause");
+        pauseTime = SystemClock.elapsedRealtime() - chronometer.getBase();
+        gameViewModel.setPauseTime(pauseTime);
+        gameViewModel.gamePause();
+    }
 
+    private void init() {
         rv_numberGrid.setLayoutManager(new GridLayoutManager(requireContext(), 5));
         adapter = new GameRecyclerViewAdapter(gameViewModel.getGameButtonContentList(), new GameButtonOnClickListener() {
             @Override
@@ -154,5 +164,6 @@ public class GameFragment extends Fragment {
         });
         rv_numberGrid.setAdapter(adapter);
     }
+
 
 }

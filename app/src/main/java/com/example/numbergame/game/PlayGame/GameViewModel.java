@@ -1,7 +1,5 @@
 package com.example.numbergame.game.PlayGame;
 
-import android.content.pm.PackageManager;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,7 +9,6 @@ import com.example.numbergame.UserRepository;
 import com.example.numbergame.game.GameButtonContent;
 import com.example.numbergame.game.GameRecord;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +22,8 @@ public class GameViewModel extends ViewModel {
     private int maxNumber;
     private List<GameButtonContent> gameButtonContentList;
     private int currentNumber;
+    private long pauseTime;
+
 
     public void checkPressedButtonIsCorrect(GameButtonContent gameButtonContent) {
         if (gameButtonContent.getValue().equals(String.valueOf(currentNumber))) {
@@ -45,8 +44,6 @@ public class GameViewModel extends ViewModel {
     }
 
     public void setupNewGame(int maxNumber) {
-        myState.setValue(GameState.LOADING);
-
         currentNumber = 1;
         this.maxNumber = maxNumber;
         gameButtonContentList = new ArrayList<>();
@@ -55,19 +52,14 @@ public class GameViewModel extends ViewModel {
         }
         Collections.shuffle(gameButtonContentList);
         myState.setValue(GameState.PLAYING);
-
-    }
-
-    public void pause(){
-        myState.setValue(GameState.PAUSE);
     }
 
     public void resume(){
         myState.setValue(GameState.PLAYING);
     }
 
-    public void finish(){
-        myState.setValue(GameState.FINISHED);
+    public void gamePause(){
+        myState.setValue(GameState.PAUSE);
     }
 
     private void checkIfFinished() {
@@ -92,12 +84,20 @@ public class GameViewModel extends ViewModel {
         return pressedButtonCorrect;
     }
 
+    public void setPauseTime(long pauseTime){
+        this.pauseTime = pauseTime;
+    }
+
+    public long getPauseTime(){
+        return pauseTime;
+    }
+
+
     public LiveData<GameState> getGameState(){
         return myState;
     }
 
     public enum GameState{
-        LOADING,
         PLAYING,
         PAUSE,
         FINISHED
