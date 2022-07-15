@@ -17,27 +17,27 @@ import java.util.List;
 
 public class LeaderboardViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
-    private MutableLiveData<Boolean> allRecordsLoaded = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> competitionRecordsLoaded = new MutableLiveData<>(false);
 
     private List<GameRecord> recordList = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void loadAllRecord(){
-        userRepository.getAllRecords(result->{
+    public void loadCompetitionRecord(){
+        userRepository.getCompetitionRecords(result->{
             if(result instanceof Result.Success){
                 recordList = ((Result.Success<List<GameRecord>>)result).getData();
-                allRecordsLoaded.setValue(true);
+                competitionRecordsLoaded.setValue(true);
                 recordList.sort(Comparator.naturalOrder());
             }
         });
     }
 
-    public List<GameRecord> getAllRecordList(){
+    public List<GameRecord> getCompetitionRecordList(){
         return recordList;
     }
 
-    public LiveData<Boolean> allRecordsLoaded(){
-        return allRecordsLoaded;
+    public LiveData<Boolean> competitionRecordsLoaded(){
+        return competitionRecordsLoaded;
     }
 
 }

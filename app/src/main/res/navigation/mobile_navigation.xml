@@ -9,11 +9,14 @@
         android:id="@+id/navigation_gameSetting"
         android:name="com.example.numbergame.game.GameSetting.GameSettingFragment"
         android:label="@string/item_gamesetting"
-        tools:layout="@layout/fragment_gamesetting" >
+        tools:layout="@layout/fragment_gamesetting">
         <action
             android:id="@+id/action_navigation_gameSetting_to_gameFragment"
             app:destination="@id/gameFragment"
-            app:popUpTo="@id/navigation_gameSetting"/>
+            app:popUpTo="@id/navigation_gameSetting" />
+        <action
+            android:id="@+id/action_navigation_gameSetting_to_competitionGameFragment"
+            app:destination="@id/competitionGameFragment" />
     </fragment>
 
     <fragment
@@ -31,13 +34,26 @@
         android:id="@+id/gameFragment"
         android:name="com.example.numbergame.game.PlayGame.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" >
+        tools:layout="@layout/fragment_game">
         <argument
             android:name="maxNumber"
-            app:argType="integer"
-            android:defaultValue="20" />
+            android:defaultValue="20"
+            app:argType="integer" />
         <action
             android:id="@+id/action_gameFragment_to_navigation_gameSetting"
+            app:destination="@id/navigation_gameSetting" />
+    </fragment>
+    <fragment
+        android:id="@+id/competitionGameFragment"
+        android:name="com.example.numbergame.game.CompetitionGameFragment"
+        android:label="fragment_competitiongame"
+        tools:layout="@layout/fragment_competitiongame">
+        <argument
+            android:name="maxNumber"
+            android:defaultValue="20"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_competitionGameFragment_to_navigation_gameSetting"
             app:destination="@id/navigation_gameSetting" />
     </fragment>
 

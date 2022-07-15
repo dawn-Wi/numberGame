@@ -1,5 +1,6 @@
 package com.example.numbergame.game.Leaderboard;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +50,10 @@ public class LeaderboardFragment extends Fragment {
     }
 
     private void init(){
-        leaderboardViewModel.loadAllRecord();
-        recordList = leaderboardViewModel.getAllRecordList();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            leaderboardViewModel.loadCompetitionRecord();
+        }
+        recordList = leaderboardViewModel.getCompetitionRecordList();
         FragmentManager fm = getChildFragmentManager();
         Fragment myFrag = LeaderboardListFragment.newInstance(1,recordList);
         FragmentTransaction transaction = fm.beginTransaction();

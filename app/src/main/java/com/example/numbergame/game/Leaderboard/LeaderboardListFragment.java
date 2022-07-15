@@ -79,11 +79,11 @@ public class LeaderboardListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        leaderboardViewModel.allRecordsLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        leaderboardViewModel.competitionRecordsLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
                 if(isLoaded){
-                    adapter.setRecordList(leaderboardViewModel.getAllRecordList());
+                    adapter.setRecordList(leaderboardViewModel.getCompetitionRecordList());
                 }
             }
         });
