@@ -27,9 +27,9 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position){
-        holder.timestamp.setText("Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
+        holder.rank.setText("1");
         holder.userId.setText(recordList.get(position).getUserId());
-        holder.buttonNum.setText("ButtonNum: " + recordList.get(position).getButtonNum());
+        holder.buttonNumAndRecord.setText("ButtonNum: " + recordList.get(position).getButtonNum()+" / Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
     }
 
     @Override
@@ -41,15 +41,15 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public final TextView timestamp;
+        public final TextView rank;
         public final TextView userId;
-        public final TextView buttonNum;
+        public final TextView buttonNumAndRecord;
 
         public ViewHolder(ObjectLeaderboardBinding binding){
             super(binding.getRoot());
-            timestamp = binding.leaderboardTvRecord;
-            userId = binding.leaderboardTvUserId;
-            buttonNum = binding.leaderboardTvButtonNum;
+            rank = binding.leaderboardTvRank;
+            userId = binding.leaderboardTvName;
+            buttonNumAndRecord = binding.leaderboardTvButtonNumAndRecord;
         }
 
         @Override

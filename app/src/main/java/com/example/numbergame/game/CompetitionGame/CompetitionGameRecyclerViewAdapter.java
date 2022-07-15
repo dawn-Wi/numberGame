@@ -1,4 +1,4 @@
-package com.example.numbergame.game;
+package com.example.numbergame.game.CompetitionGame;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.numbergame.databinding.ObjectGameBinding;
-import com.example.numbergame.game.PlayGame.GameRecyclerViewAdapter;
+import com.example.numbergame.game.GameButtonContent;
+import com.example.numbergame.game.GameButtonOnClickListener;
 
 import java.util.List;
 

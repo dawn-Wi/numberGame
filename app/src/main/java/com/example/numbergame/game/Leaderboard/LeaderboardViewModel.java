@@ -13,13 +13,18 @@ import com.example.numbergame.game.GameRecord;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class LeaderboardViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
     private MutableLiveData<Boolean> competitionRecordsLoaded = new MutableLiveData<>(false);
 
     private List<GameRecord> recordList = new ArrayList<>();
+    private Map<Integer, List<GameRecord>> sortRecordList = new HashMap<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void loadCompetitionRecord(){
@@ -30,6 +35,14 @@ public class LeaderboardViewModel extends ViewModel {
                 recordList.sort(Comparator.naturalOrder());
             }
         });
+    }
+
+    private void setSortRecordList(){
+        Set<GameRecord> recordSet = new HashSet<GameRecord>(recordList);
+
+        for(int i=0;i<recordList.size();i++){
+
+        }
     }
 
     public List<GameRecord> getCompetitionRecordList(){

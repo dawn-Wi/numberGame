@@ -1,4 +1,4 @@
-package com.example.numbergame.game;
+package com.example.numbergame.game.CompetitionGame;
 
 import android.os.Bundle;
 
@@ -23,12 +23,11 @@ import android.widget.Chronometer;
 
 import com.example.numbergame.R;
 import com.example.numbergame.databinding.FragmentCompetitiongameBinding;
-import com.example.numbergame.databinding.FragmentGameBinding;
-import com.example.numbergame.databinding.FragmentGamesettingBinding;
-import com.example.numbergame.game.PlayGame.GameFragment;
+import com.example.numbergame.game.GameButtonContent;
+import com.example.numbergame.game.GameButtonOnClickListener;
+import com.example.numbergame.game.GameRecord;
+import com.example.numbergame.game.NumberParser;
 import com.example.numbergame.game.PlayGame.GameFragmentArgs;
-import com.example.numbergame.game.PlayGame.GameRecyclerViewAdapter;
-import com.example.numbergame.game.PlayGame.GameViewModel;
 
 public class CompetitionGameFragment extends Fragment {
 

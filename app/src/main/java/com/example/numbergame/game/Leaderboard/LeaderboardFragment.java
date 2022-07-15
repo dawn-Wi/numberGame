@@ -18,6 +18,7 @@ import com.example.numbergame.databinding.FragmentLeaderboardBinding;
 import com.example.numbergame.game.GameRecord;
 
 import java.util.List;
+import java.util.Map;
 
 public class LeaderboardFragment extends Fragment {
 
@@ -54,6 +55,7 @@ public class LeaderboardFragment extends Fragment {
             leaderboardViewModel.loadCompetitionRecord();
         }
         recordList = leaderboardViewModel.getCompetitionRecordList();
+
         FragmentManager fm = getChildFragmentManager();
         Fragment myFrag = LeaderboardListFragment.newInstance(1,recordList);
         FragmentTransaction transaction = fm.beginTransaction();
