@@ -1,6 +1,7 @@
 package com.example.numbergame.game.PlayGame;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,24 +36,39 @@ public class GameFragment extends Fragment {
     private GameViewModel gameViewModel;
 
     private GameRecyclerViewAdapter adapter;
-    private ConstraintLayout cl_layout;
     private RecyclerView rv_numberGrid;
     private Button bt_home;
 
     private Chronometer chronometer;
     private boolean answerCorrect;
-    private long pauseTime, reStartTime=0;
+    private long pauseTime, reStartTime = 0;
+
 
     public GameFragment() {
 
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        outState.putParcelable("key", rv_numberGrid.getLayoutManager().onSaveInstanceState());
+        outState.putLong("Time", chronometer.getBase());
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameViewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+
         int maxNumber = GameFragmentArgs.fromBundle(getArguments()).getMaxNumber();
-        gameViewModel.setupNewGame(maxNumber);
+
+        if (savedInstanceState != null) {
+            gameViewModel.resume();
+            reStartTime = gameViewModel.getReStartTime();
+//            rv_numberGrid = savedInstanceState.getParcelable("key");
+        } else {
+            gameViewModel.setupNewGame(maxNumber);
+        }
 
     }
 
@@ -61,9 +77,9 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
 
-        cl_layout = binding.gameClLayout;
         rv_numberGrid = binding.gameRvNumberGrid;
         bt_home = binding.gameBtHome;
+
 
         init();
 
@@ -78,7 +94,6 @@ public class GameFragment extends Fragment {
         bt_home.setVisibility(View.INVISIBLE);
         chronometer = binding.gameChronometer;
         chronometer.setFormat("%s");
-
         //endregion
 
         //region Observer
@@ -99,17 +114,21 @@ public class GameFragment extends Fragment {
             @Override
             public void onChanged(GameViewModel.GameState gameState) {
                 if (gameState == GameViewModel.GameState.PLAYING) {
-                    if(reStartTime<=0){
+                    if (reStartTime <= 0) {
                         chronometer.setBase(SystemClock.elapsedRealtime());
-
-                    }else{
-                        chronometer.setBase(SystemClock.elapsedRealtime()-gameViewModel.getPauseTime());
+                    } else {
+                        if (savedInstanceState != null) {
+                            chronometer.setBase(savedInstanceState.getLong("Time"));
+                        } else {
+                            chronometer.setBase(SystemClock.elapsedRealtime() - gameViewModel.getPauseTime());
+                        }
                     }
                     chronometer.start();
                 } else if (gameState == GameViewModel.GameState.PAUSE) {
                     reStartTime = SystemClock.elapsedRealtime() - pauseTime;
+                    gameViewModel.setReStartTime(reStartTime);
                 } else if (gameState == GameViewModel.GameState.FINISHED) {
-                    reStartTime=0;
+                    reStartTime = 0;
                     chronometer.stop();
                     bt_home.setVisibility(View.VISIBLE);
                     GameRecord gameRecord = new GameRecord(NumberParser.parseChronoTimeToSeconds(chronometer.getText().toString()), gameViewModel.getLoggedUserId(), gameViewModel.getMaxNumber());
@@ -142,7 +161,6 @@ public class GameFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Log.d("pause", "onPause: pause");
         pauseTime = SystemClock.elapsedRealtime() - chronometer.getBase();
         gameViewModel.setPauseTime(pauseTime);
         gameViewModel.gamePause();

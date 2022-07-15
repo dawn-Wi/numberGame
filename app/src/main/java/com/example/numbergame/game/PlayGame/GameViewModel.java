@@ -22,7 +22,7 @@ public class GameViewModel extends ViewModel {
     private int maxNumber;
     private List<GameButtonContent> gameButtonContentList;
     private int currentNumber;
-    private long pauseTime;
+    private long reStartTime, pauseTime;
 
 
     public void checkPressedButtonIsCorrect(GameButtonContent gameButtonContent) {
@@ -54,11 +54,11 @@ public class GameViewModel extends ViewModel {
         myState.setValue(GameState.PLAYING);
     }
 
-    public void resume(){
+    public void resume() {
         myState.setValue(GameState.PLAYING);
     }
 
-    public void gamePause(){
+    public void gamePause() {
         myState.setValue(GameState.PAUSE);
     }
 
@@ -84,20 +84,28 @@ public class GameViewModel extends ViewModel {
         return pressedButtonCorrect;
     }
 
-    public void setPauseTime(long pauseTime){
+    public void setPauseTime(long pauseTime) {
         this.pauseTime = pauseTime;
     }
 
-    public long getPauseTime(){
+    public long getPauseTime() {
         return pauseTime;
     }
 
+    public void setReStartTime(long reStartTime) {
+        this.reStartTime = reStartTime;
+    }
 
-    public LiveData<GameState> getGameState(){
+    public long getReStartTime() {
+        return reStartTime;
+    }
+
+
+    public LiveData<GameState> getGameState() {
         return myState;
     }
 
-    public enum GameState{
+    public enum GameState {
         PLAYING,
         PAUSE,
         FINISHED
