@@ -4,7 +4,7 @@
     android:id="@+id/rank_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="40dp"
+    android:layout_marginTop="50dp"
     app:layoutManager="LinearLayoutManager"
     app:layout_constraintTop_toTopOf="@+id/constraintLayout"
     tools:context=".game.MyRecord.MyRecordListFragment"

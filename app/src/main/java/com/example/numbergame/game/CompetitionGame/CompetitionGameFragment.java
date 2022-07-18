@@ -74,6 +74,7 @@ public class CompetitionGameFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCompetitiongameBinding.inflate(inflater,container, false);
 
+        chronometer = binding.competitionChronometer;
         rv_numberGrid = binding.competitionRvNumberGrid;
         bt_home = binding.competitionBtHome;
 
@@ -87,7 +88,6 @@ public class CompetitionGameFragment extends Fragment {
 
         //region 다른코드
         bt_home.setVisibility(View.INVISIBLE);
-        chronometer = binding.competitionChronometer;
         chronometer.setFormat("%s");
         //endregion
 

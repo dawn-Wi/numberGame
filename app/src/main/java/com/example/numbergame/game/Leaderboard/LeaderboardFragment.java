@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.numbergame.R;
 import com.example.numbergame.databinding.FragmentLeaderboardBinding;
 import com.example.numbergame.game.GameRecord;
 
@@ -26,6 +28,10 @@ public class LeaderboardFragment extends Fragment {
     private LeaderboardViewModel leaderboardViewModel;
     private ConstraintLayout cl_layout;
     private List<GameRecord> recordList;
+
+    private TextView tv_rankLabel;
+    private TextView tv_nameLabel;
+    private TextView tv_timeLabel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +54,9 @@ public class LeaderboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tv_rankLabel = view.findViewById(R.id.leaderboard_tv_rankLabel);
+        tv_nameLabel = view.findViewById(R.id.leaderboard_tv_nameLabel);
+        tv_timeLabel = view.findViewById(R.id.leaderboard_tv_timeLabel);
     }
 
     private void init() {
