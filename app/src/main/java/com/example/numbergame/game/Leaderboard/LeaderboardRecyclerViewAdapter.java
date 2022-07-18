@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.numbergame.databinding.ObjectLeaderboardBinding;
 import com.example.numbergame.game.GameRecord;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderboardRecyclerViewAdapter.ViewHolder> {
@@ -27,10 +29,11 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position){
-        holder.rank.setText("1");
+        holder.rank.setText(String.valueOf(position+1));
         holder.userId.setText(recordList.get(position).getUserId());
         holder.buttonNumAndRecord.setText("ButtonNum: " + recordList.get(position).getButtonNum()+" / Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
     }
+
 
     @Override
     public int getItemCount(){return recordList.size();}
@@ -39,6 +42,7 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
         recordList = newRecordList;
         notifyDataSetChanged();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final TextView rank;

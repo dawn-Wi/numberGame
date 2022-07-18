@@ -24,7 +24,6 @@ public class LeaderboardViewModel extends ViewModel {
     private MutableLiveData<Boolean> competitionRecordsLoaded = new MutableLiveData<>(false);
 
     private List<GameRecord> recordList = new ArrayList<>();
-    private Map<Integer, List<GameRecord>> sortRecordList = new HashMap<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void loadCompetitionRecord(){
@@ -35,14 +34,6 @@ public class LeaderboardViewModel extends ViewModel {
                 recordList.sort(Comparator.naturalOrder());
             }
         });
-    }
-
-    private void setSortRecordList(){
-        Set<GameRecord> recordSet = new HashSet<GameRecord>(recordList);
-
-        for(int i=0;i<recordList.size();i++){
-
-        }
     }
 
     public List<GameRecord> getCompetitionRecordList(){
