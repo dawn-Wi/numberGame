@@ -50,14 +50,14 @@ public class LeaderboardFragment extends Fragment {
 
     }
 
-    private void init(){
+    private void init() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             leaderboardViewModel.loadCompetitionRecord();
         }
         recordList = leaderboardViewModel.getCompetitionRecordList();
 
         FragmentManager fm = getChildFragmentManager();
-        Fragment myFrag = LeaderboardListFragment.newInstance(1,recordList);
+        Fragment myFrag = LeaderboardListFragment.newInstance(1, recordList);
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(cl_layout.getId(), myFrag);
         transaction.commit();

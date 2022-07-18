@@ -12,7 +12,6 @@ public class GameRecord implements Comparable<GameRecord> {
     }
 
 
-
     @Override
     public int compareTo(GameRecord arg0) {
         long targetTimeStamp = arg0.getTimestamp();
@@ -20,7 +19,6 @@ public class GameRecord implements Comparable<GameRecord> {
         else if (timestamp > targetTimeStamp) return 1;
         else return -1;
     }
-
 
 
     public long getTimestamp() {

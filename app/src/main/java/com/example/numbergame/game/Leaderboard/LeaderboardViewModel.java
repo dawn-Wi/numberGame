@@ -26,21 +26,21 @@ public class LeaderboardViewModel extends ViewModel {
     private List<GameRecord> recordList = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void loadCompetitionRecord(){
-        userRepository.getCompetitionRecords(result->{
-            if(result instanceof Result.Success){
-                recordList = ((Result.Success<List<GameRecord>>)result).getData();
+    public void loadCompetitionRecord() {
+        userRepository.getCompetitionRecords(result -> {
+            if (result instanceof Result.Success) {
+                recordList = ((Result.Success<List<GameRecord>>) result).getData();
                 competitionRecordsLoaded.setValue(true);
                 recordList.sort(Comparator.naturalOrder());
             }
         });
     }
 
-    public List<GameRecord> getCompetitionRecordList(){
+    public List<GameRecord> getCompetitionRecordList() {
         return recordList;
     }
 
-    public LiveData<Boolean> competitionRecordsLoaded(){
+    public LiveData<Boolean> competitionRecordsLoaded() {
         return competitionRecordsLoaded;
     }
 

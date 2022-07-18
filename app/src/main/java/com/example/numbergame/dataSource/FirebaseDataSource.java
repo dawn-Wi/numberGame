@@ -149,7 +149,7 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void addCompetitionRecord(GameRecord toAdd, DataSourceCallback<Result> callback){
+    public void addCompetitionRecord(GameRecord toAdd, DataSourceCallback<Result> callback) {
         Map<String, Object> record = new HashMap<String, Object>();
         record.put("timeStamp", toAdd.getTimestamp());
         record.put("userId", toAdd.getUserId());
@@ -160,7 +160,7 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void getCompetitionRecords(DataSourceCallback<Result> callback){
+    public void getCompetitionRecords(DataSourceCallback<Result> callback) {
         List<GameRecord> toReturn = new ArrayList<>();
         db.collection("competitionRecords")
                 .get()

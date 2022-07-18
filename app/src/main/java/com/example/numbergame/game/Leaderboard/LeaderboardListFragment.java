@@ -34,7 +34,9 @@ public class LeaderboardListFragment extends Fragment {
     public LeaderboardListFragment() {
     }
 
-    public LeaderboardListFragment(List<GameRecord> recordList) {this.recordList=recordList;}
+    public LeaderboardListFragment(List<GameRecord> recordList) {
+        this.recordList = recordList;
+    }
 
     public static LeaderboardListFragment newInstance(int columnCount, List<GameRecord> recordList) {
         LeaderboardListFragment fragment = new LeaderboardListFragment(recordList);
@@ -47,8 +49,7 @@ public class LeaderboardListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null)
-        {
+        if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
@@ -60,15 +61,15 @@ public class LeaderboardListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leaderboard_list, container, false);
         leaderboardViewModel = new ViewModelProvider(requireActivity()).get(LeaderboardViewModel.class);
 
-        if(view instanceof RecyclerView){
+        if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView= (RecyclerView) view;
-            if(mColumnCount<=1){
+            RecyclerView recyclerView = (RecyclerView) view;
+            if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            }else{
-                recyclerView.setLayoutManager(new GridLayoutManager(context,mColumnCount));
+            } else {
+                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter = new LeaderboardRecyclerViewAdapter(recordList,new ViewModelProvider(requireActivity()).get(LeaderboardViewModel.class));
+            adapter = new LeaderboardRecyclerViewAdapter(recordList, new ViewModelProvider(requireActivity()).get(LeaderboardViewModel.class));
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
         }
@@ -82,7 +83,7 @@ public class LeaderboardListFragment extends Fragment {
         leaderboardViewModel.competitionRecordsLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
+                if (isLoaded) {
                     adapter.setRecordList(leaderboardViewModel.getCompetitionRecordList());
                 }
             }

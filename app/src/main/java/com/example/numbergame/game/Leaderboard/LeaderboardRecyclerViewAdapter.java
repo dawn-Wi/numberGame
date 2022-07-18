@@ -17,39 +17,41 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
     private List<GameRecord> recordList;
     private LeaderboardViewModel leaderboardViewModel;
 
-    public LeaderboardRecyclerViewAdapter(List<GameRecord> items, LeaderboardViewModel lvm){
-        recordList=items;
-        leaderboardViewModel=lvm;
+    public LeaderboardRecyclerViewAdapter(List<GameRecord> items, LeaderboardViewModel lvm) {
+        recordList = items;
+        leaderboardViewModel = lvm;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        return new ViewHolder(ObjectLeaderboardBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(ObjectLeaderboardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position){
-        holder.rank.setText(String.valueOf(position+1));
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.rank.setText(String.valueOf(position + 1));
         holder.userId.setText(recordList.get(position).getUserId());
-        holder.buttonNumAndRecord.setText("ButtonNum: " + recordList.get(position).getButtonNum()+" / Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
+        holder.buttonNumAndRecord.setText("ButtonNum: " + recordList.get(position).getButtonNum() + " / Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
     }
 
 
     @Override
-    public int getItemCount(){return recordList.size();}
+    public int getItemCount() {
+        return recordList.size();
+    }
 
-    public void setRecordList(List<GameRecord> newRecordList){
+    public void setRecordList(List<GameRecord> newRecordList) {
         recordList = newRecordList;
         notifyDataSetChanged();
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView rank;
         public final TextView userId;
         public final TextView buttonNumAndRecord;
 
-        public ViewHolder(ObjectLeaderboardBinding binding){
+        public ViewHolder(ObjectLeaderboardBinding binding) {
             super(binding.getRoot());
             rank = binding.leaderboardTvRank;
             userId = binding.leaderboardTvName;
@@ -57,6 +59,8 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
         }
 
         @Override
-        public String toString(){return super.toString()+"'";}
+        public String toString() {
+            return super.toString() + "'";
+        }
     }
 }
