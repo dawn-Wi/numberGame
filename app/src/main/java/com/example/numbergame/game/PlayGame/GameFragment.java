@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Chronometer;
 
@@ -93,6 +95,7 @@ public class GameFragment extends Fragment {
         bt_home.setVisibility(View.INVISIBLE);
         chronometer = binding.gameChronometer;
         chronometer.setFormat("%s");
+
         //endregion
 
         //region Observer

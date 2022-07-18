@@ -1,7 +1,8 @@
 package com.example.numbergame.game;
 
-public class GameButtonContent
-{
+import android.content.Context;
+
+public class GameButtonContent {
     private String value;
     private boolean isClicked;
 

@@ -3,6 +3,8 @@ package com.example.numbergame.game.PlayGame;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -32,10 +34,13 @@ public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.gameButtonContent = data.get(position);
-        if (holder.gameButtonContent.isClicked())
+        if (holder.gameButtonContent.isClicked()) {
+            holder.bt_number.startAnimation(AnimationUtils.loadAnimation(holder.bt_number.getContext(), com.example.numbergame.R.anim.buttonanim));
             holder.bt_number.setVisibility(View.INVISIBLE);
-        else
+        } else{
             holder.bt_number.setVisibility(View.VISIBLE);
+        }
+
         holder.bt_number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
