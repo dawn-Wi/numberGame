@@ -32,4 +32,5 @@
     <string name="tv_useridLabel">아이디</string>
     <string name="tv_timeLabel">시간</string>
     <string name="tv_buttonnumLabel">버튼갯수</string>
+    <string name="tv_orLabel">또는</string>
 </resources>
