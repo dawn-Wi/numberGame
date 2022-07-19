@@ -35,7 +35,6 @@ public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerVi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.gameButtonContent = data.get(position);
 
-
         if (holder.gameButtonContent.getButtonState() == GameButtonContent.ButtonState.ANIMATING) {
             Animation animation = AnimationUtils.loadAnimation(holder.bt_number.getContext(), com.example.numbergame.R.anim.buttonanim);
             animation.setAnimationListener(new Animation.AnimationListener() {
@@ -61,8 +60,6 @@ public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerVi
             holder.bt_number.setVisibility(View.VISIBLE);
         } else
             holder.bt_number.setVisibility(View.INVISIBLE);
-
-
 
 
         holder.bt_number.setOnClickListener(new View.OnClickListener() {

@@ -58,6 +58,43 @@ public class SignupFragment extends Fragment {
 
         loginViewModel.getId();
 
+        //region Observer
+        loginViewModel.getSignupFormState().observe(getViewLifecycleOwner(), new Observer<SignupFormState>() {
+            @Override
+            public void onChanged(SignupFormState SignupFormState) {
+                if (SignupFormState.getIdErrorMessage() != null) {
+                    et_email.setError(SignupFormState.getIdErrorMessage());
+                }
+                if (SignupFormState.getPasswordErrorMessage() != null) {
+                    et_password.setError(SignupFormState.getPasswordErrorMessage());
+                }
+                if (SignupFormState.getPasswordCheckErrorMessage() != null) {
+                    et_passwordCheck.setError(SignupFormState.getPasswordCheckErrorMessage());
+                }
+                if (SignupFormState.getDisplayNameErrorMessage() != null) {
+                    et_displayName.setError(SignupFormState.getDisplayNameErrorMessage());
+                }
+                bt_signup.setEnabled(SignupFormState.isFieldsValid());
+            }
+        });
+
+        loginViewModel.registerSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isRegistrationSuccessful) {
+                if (isRegistrationSuccessful) {
+                    Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
+                    NavHostFragment.findNavController(SignupFragment.this).navigateUp();
+                    loginViewModel.setRegisterSuccess(false);
+                } else {
+                    Toast.makeText(requireContext(), "fail", Toast.LENGTH_SHORT).show();
+                    et_email.setText("");
+                    et_password.setText("");
+                }
+            }
+        });
+        //endregion
+
+        //region Listener
         et_email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -126,27 +163,6 @@ public class SignupFragment extends Fragment {
             }
         });
 
-
-        loginViewModel.getSignupFormState().observe(getViewLifecycleOwner(), new Observer<SignupFormState>() {
-            @Override
-            public void onChanged(SignupFormState SignupFormState) {
-                if (SignupFormState.getIdErrorMessage() != null) {
-                    et_email.setError(SignupFormState.getIdErrorMessage());
-                }
-                if (SignupFormState.getPasswordErrorMessage() != null) {
-                    et_password.setError(SignupFormState.getPasswordErrorMessage());
-                }
-                if (SignupFormState.getPasswordCheckErrorMessage() != null) {
-                    et_passwordCheck.setError(SignupFormState.getPasswordCheckErrorMessage());
-                }
-                if (SignupFormState.getDisplayNameErrorMessage() != null) {
-                    et_displayName.setError(SignupFormState.getDisplayNameErrorMessage());
-                }
-                bt_signup.setEnabled(SignupFormState.isFieldsValid());
-            }
-        });
-
-
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,21 +175,8 @@ public class SignupFragment extends Fragment {
 
             }
         });
+        //endregion
 
 
-        loginViewModel.registerSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isRegistrationSuccessful) {
-                if (isRegistrationSuccessful) {
-                    Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
-                    NavHostFragment.findNavController(SignupFragment.this).navigateUp();
-                    loginViewModel.setRegisterSuccess(false);
-                } else {
-                    Toast.makeText(requireContext(), "fail", Toast.LENGTH_SHORT).show();
-                    et_email.setText("");
-                    et_password.setText("");
-                }
-            }
-        });
     }
 }

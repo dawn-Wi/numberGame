@@ -26,4 +26,10 @@
     <string name="bt_gameStart">시작</string>
     <string name="korean">한국어</string>
     <string name="english">영어</string>
+    <string name="bt_home">메인화면</string>
+    <string name="bt_competition">경쟁</string>
+    <string name="tv_rankLabel">순위</string>
+    <string name="tv_useridLabel">아이디</string>
+    <string name="tv_timeLabel">시간</string>
+    <string name="tv_buttonnumLabel">버튼갯수</string>
 </resources>

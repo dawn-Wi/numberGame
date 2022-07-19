@@ -3,6 +3,8 @@ package com.example.numbergame.game.CompetitionGame;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -31,14 +33,40 @@ public class CompetitionGameRecyclerViewAdapter extends RecyclerView.Adapter<Com
     @Override
     public void onBindViewHolder(@NonNull CompetitionGameRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.gameButtonContent = data.get(position);
-        if (holder.gameButtonContent.isClicked())
-            holder.bt_number.setVisibility(View.INVISIBLE);
-        else
+        if (holder.gameButtonContent.getButtonState() == GameButtonContent.ButtonState.ANIMATING) {
+            Animation animation = AnimationUtils.loadAnimation(holder.bt_number.getContext(), com.example.numbergame.R.anim.buttonanim);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    holder.gameButtonContent.setButtonState(GameButtonContent.ButtonState.INVISIBLE);
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            holder.bt_number.startAnimation(animation);
+
+        } else if (holder.gameButtonContent.getButtonState() == GameButtonContent.ButtonState.VISIBLE) {
             holder.bt_number.setVisibility(View.VISIBLE);
+        } else
+            holder.bt_number.setVisibility(View.INVISIBLE);
+
+
         holder.bt_number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gameButtonOnClickListener.onButtonClicked(holder.gameButtonContent);
+                if(holder.gameButtonContent.isClicked()){
+                    holder.gameButtonContent.setButtonState(GameButtonContent.ButtonState.ANIMATING);
+                }
             }
         });
         holder.bt_number.setText(holder.gameButtonContent.getValue());

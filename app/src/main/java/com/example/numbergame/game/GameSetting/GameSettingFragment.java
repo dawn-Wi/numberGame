@@ -46,8 +46,10 @@ public class GameSettingFragment extends Fragment {
     int locale_number;
     ArrayList<String> locales;
     ArrayAdapter adapter;
+
     private FragmentGamesettingBinding binding;
     private GameSettingViewModel gameSettingViewModel;
+
     private Spinner sp_language;
     private TextView tv_maxNumber;
     private EditText et_maxNumber;
@@ -120,6 +122,11 @@ public class GameSettingFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentGamesettingBinding.inflate(inflater, container, false);
+        sp_language = binding.gameSettingSpLanguage;
+        tv_maxNumber = binding.gameSettingTvMaxNumberLabel;
+        et_maxNumber = binding.gameSettingEtMaxNumber;
+        bt_gameStart = binding.gameSettingBtGameStart;
+        bt_competition = binding.gamesettingBtCompetitionButton;
         View root = binding.getRoot();
 
         return root;
@@ -128,11 +135,6 @@ public class GameSettingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle saveInstanceState) {
         super.onViewCreated(view, saveInstanceState);
-        sp_language = binding.gameSettingSpLanguage;
-        tv_maxNumber = binding.gameSettingTvMaxNumberLabel;
-        et_maxNumber = binding.gameSettingEtMaxNumber;
-        bt_gameStart = binding.gameSettingBtGameStart;
-        bt_competition = binding.gamesettingBtCompetitionButton;
 
         //region spinner
         sharedPreferences = requireActivity().getSharedPreferences("shared", MODE_PRIVATE);

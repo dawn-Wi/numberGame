@@ -26,4 +26,10 @@
     <string name="bt_gameStart">Start</string>
     <string name="korean">Korean</string>
     <string name="english">english</string>
+    <string name="bt_home">home</string>
+    <string name="bt_competition">Competition</string>
+    <string name="tv_rankLabel">Rank</string>
+    <string name="tv_useridLabel">UserId</string>
+    <string name="tv_timeLabel">Time</string>
+    <string name="tv_buttonnumLabel">ButtonNum</string>
 </resources>

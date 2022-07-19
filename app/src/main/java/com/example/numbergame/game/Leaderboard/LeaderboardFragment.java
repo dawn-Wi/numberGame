@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,12 +27,13 @@ public class LeaderboardFragment extends Fragment {
 
     private FragmentLeaderboardBinding binding;
     private LeaderboardViewModel leaderboardViewModel;
-    private ConstraintLayout cl_layout;
-    private List<GameRecord> recordList;
 
+    private FrameLayout fl_list;
     private TextView tv_rankLabel;
     private TextView tv_nameLabel;
     private TextView tv_timeLabel;
+
+    private List<GameRecord> recordList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class LeaderboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLeaderboardBinding.inflate(inflater, container, false);
-        cl_layout = binding.leaderboardClLayout;
+        fl_list = binding.leaderboardFlList;
         tv_rankLabel = binding.leaderboardTvRankLabel;
         tv_nameLabel= binding.leaderboardTvNameLabel;
         tv_timeLabel = binding.leaderboardTvTimeLabel;
@@ -59,15 +61,12 @@ public class LeaderboardFragment extends Fragment {
     }
 
     private void init() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            leaderboardViewModel.loadCompetitionRecord();
-        }
+        leaderboardViewModel.loadCompetitionRecord();
         recordList = leaderboardViewModel.getCompetitionRecordList();
-
         FragmentManager fm = getChildFragmentManager();
         Fragment myFrag = LeaderboardListFragment.newInstance(1, recordList);
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(cl_layout.getId(), myFrag);
+        transaction.replace(fl_list.getId(), myFrag);
         transaction.commit();
     }
 }

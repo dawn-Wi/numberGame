@@ -57,7 +57,6 @@ public class LeaderboardListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leaderboard_list, container, false);
         leaderboardViewModel = new ViewModelProvider(requireActivity()).get(LeaderboardViewModel.class);
 

@@ -35,22 +35,16 @@ public class CompetitionGameFragment extends Fragment {
     private CompetitionGameViewModel competitionGameViewModel;
 
     private CompetitionGameRecyclerViewAdapter adapter;
+
     private RecyclerView rv_numberGrid;
     private Button bt_home;
-
     private Chronometer chronometer;
+
     private boolean answerCorrect;
     private long pauseTime, reStartTime = 0;
 
     public CompetitionGameFragment() {
 
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-//        outState.putParcelable("key", rv_numberGrid.getLayoutManager().onSaveInstanceState());
-        outState.putLong("Time", chronometer.getBase());
     }
 
     @Override
@@ -60,19 +54,18 @@ public class CompetitionGameFragment extends Fragment {
 
         int maxNumber = GameFragmentArgs.fromBundle(getArguments()).getMaxNumber();
 
-        if(savedInstanceState!=null){
+        if (savedInstanceState != null) {
             competitionGameViewModel.resume();
             reStartTime = competitionGameViewModel.getReStartTime();
-        }else{
+        } else {
             competitionGameViewModel.setupNewGame(maxNumber);
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentCompetitiongameBinding.inflate(inflater,container, false);
+        binding = FragmentCompetitiongameBinding.inflate(inflater, container, false);
 
         chronometer = binding.competitionChronometer;
         rv_numberGrid = binding.competitionRvNumberGrid;
@@ -112,17 +105,13 @@ public class CompetitionGameFragment extends Fragment {
                     if (reStartTime <= 0) {
                         chronometer.setBase(SystemClock.elapsedRealtime());
                     } else {
-                        if (savedInstanceState != null) {
-                            chronometer.setBase(savedInstanceState.getLong("Time"));
-                        } else {
-                            chronometer.setBase(SystemClock.elapsedRealtime() - competitionGameViewModel.getPauseTime());
-                        }
+                        chronometer.setBase(SystemClock.elapsedRealtime() - competitionGameViewModel.getPauseTime());
                     }
                     chronometer.start();
-                } else if (gameState ==CompetitionGameViewModel.GameState.PAUSE) {
+                } else if (gameState == CompetitionGameViewModel.GameState.PAUSE) {
                     reStartTime = SystemClock.elapsedRealtime() - pauseTime;
                     competitionGameViewModel.setReStartTime(reStartTime);
-                } else if (gameState ==CompetitionGameViewModel.GameState.FINISHED) {
+                } else if (gameState == CompetitionGameViewModel.GameState.FINISHED) {
                     reStartTime = 0;
                     chronometer.stop();
                     bt_home.setVisibility(View.VISIBLE);
@@ -161,6 +150,7 @@ public class CompetitionGameFragment extends Fragment {
         competitionGameViewModel.setPauseTime(pauseTime);
         competitionGameViewModel.gamePause();
     }
+
 
     private void init() {
         rv_numberGrid.setLayoutManager(new GridLayoutManager(requireContext(), 5));

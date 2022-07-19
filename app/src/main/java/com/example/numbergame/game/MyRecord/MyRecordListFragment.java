@@ -49,8 +49,7 @@ public class MyRecordListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null)
-        {
+        if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
@@ -58,22 +57,20 @@ public class MyRecordListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_myrecord_list, container, false);
         myRecordViewModel = new ViewModelProvider(requireActivity()).get(MyRecordViewModel.class);
 
-        if(view instanceof RecyclerView){
+        if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if(mColumnCount<=1){
+            if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            }else{
+            } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             adapter = new MyRecordRecyclerViewAdapter(recordList, new ViewModelProvider(requireActivity()).get(MyRecordViewModel.class));
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
-
         }
         return view;
     }
@@ -85,7 +82,7 @@ public class MyRecordListFragment extends Fragment {
         myRecordViewModel.myRecordsLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
+                if (isLoaded) {
                     adapter.setRecordList(myRecordViewModel.getMyRecordList());
                 }
             }

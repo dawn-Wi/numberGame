@@ -51,13 +51,6 @@ public class GameFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-//        outState.putParcelable("key", rv_numberGrid.getLayoutManager().onSaveInstanceState());
-        outState.putLong("Time", chronometer.getBase());
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameViewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
@@ -67,7 +60,6 @@ public class GameFragment extends Fragment {
         if (savedInstanceState != null) {
             gameViewModel.resume();
             reStartTime = gameViewModel.getReStartTime();
-//            rv_numberGrid = savedInstanceState.getParcelable("key");
         } else {
             gameViewModel.setupNewGame(maxNumber);
         }
@@ -80,6 +72,7 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
 
         rv_numberGrid = binding.gameRvNumberGrid;
+        chronometer = binding.gameChronometer;
         bt_home = binding.gameBtHome;
 
         init();
@@ -93,7 +86,6 @@ public class GameFragment extends Fragment {
 
         //region 다른코드
         bt_home.setVisibility(View.INVISIBLE);
-        chronometer = binding.gameChronometer;
         chronometer.setFormat("%s");
 
         //endregion
@@ -119,11 +111,7 @@ public class GameFragment extends Fragment {
                     if (reStartTime <= 0) {
                         chronometer.setBase(SystemClock.elapsedRealtime());
                     } else {
-                        if (savedInstanceState != null) {
-                            chronometer.setBase(savedInstanceState.getLong("Time"));
-                        } else {
-                            chronometer.setBase(SystemClock.elapsedRealtime() - gameViewModel.getPauseTime());
-                        }
+                        chronometer.setBase(SystemClock.elapsedRealtime() - gameViewModel.getPauseTime());
                     }
                     chronometer.start();
                 } else if (gameState == GameViewModel.GameState.PAUSE) {
@@ -168,6 +156,7 @@ public class GameFragment extends Fragment {
         gameViewModel.gamePause();
     }
 
+
     private void init() {
         rv_numberGrid.setLayoutManager(new GridLayoutManager(requireContext(), 5));
         adapter = new GameRecyclerViewAdapter(gameViewModel.getGameButtonContentList(), new GameButtonOnClickListener() {
@@ -179,7 +168,7 @@ public class GameFragment extends Fragment {
                 } else {
                     pressed.setClicked(false);
                 }
-                //adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
         rv_numberGrid.setAdapter(adapter);

@@ -34,7 +34,6 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
         holder.buttonNumAndRecord.setText( "Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
     }
 
-
     @Override
     public int getItemCount() {
         return recordList.size();
@@ -44,7 +43,6 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
         recordList = newRecordList;
         notifyDataSetChanged();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView rank;
