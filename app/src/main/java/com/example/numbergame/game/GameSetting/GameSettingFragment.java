@@ -52,6 +52,7 @@ public class GameSettingFragment extends Fragment {
 
     private Spinner sp_language;
     private TextView tv_maxNumber;
+    private TextView tv_orLabel;
     private EditText et_maxNumber;
     private Button bt_gameStart;
     private Button bt_competition;
@@ -125,6 +126,7 @@ public class GameSettingFragment extends Fragment {
         sp_language = binding.gameSettingSpLanguage;
         tv_maxNumber = binding.gameSettingTvMaxNumberLabel;
         et_maxNumber = binding.gameSettingEtMaxNumber;
+        tv_orLabel = binding.gamesettingTvOrLabel;
         bt_gameStart = binding.gameSettingBtGameStart;
         bt_competition = binding.gamesettingBtCompetitionButton;
         View root = binding.getRoot();
