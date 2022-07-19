@@ -179,7 +179,7 @@ public class GameFragment extends Fragment {
                 } else {
                     pressed.setClicked(false);
                 }
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
             }
         });
         rv_numberGrid.setAdapter(adapter);
