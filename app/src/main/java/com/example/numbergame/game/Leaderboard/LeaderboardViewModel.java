@@ -13,31 +13,35 @@ import com.example.numbergame.game.GameRecord;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class LeaderboardViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
-    private MutableLiveData<Boolean> allRecordsLoaded = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> competitionRecordsLoaded = new MutableLiveData<>(false);
 
     private List<GameRecord> recordList = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void loadAllRecord(){
-        userRepository.getAllRecords(result->{
-            if(result instanceof Result.Success){
-                recordList = ((Result.Success<List<GameRecord>>)result).getData();
-                allRecordsLoaded.setValue(true);
+    public void loadCompetitionRecord() {
+        userRepository.getCompetitionRecords(result -> {
+            if (result instanceof Result.Success) {
+                recordList = ((Result.Success<List<GameRecord>>) result).getData();
+                competitionRecordsLoaded.setValue(true);
                 recordList.sort(Comparator.naturalOrder());
             }
         });
     }
 
-    public List<GameRecord> getAllRecordList(){
+    public List<GameRecord> getCompetitionRecordList() {
         return recordList;
     }
 
-    public LiveData<Boolean> allRecordsLoaded(){
-        return allRecordsLoaded;
+    public LiveData<Boolean> competitionRecordsLoaded() {
+        return competitionRecordsLoaded;
     }
 
 }

@@ -72,40 +72,7 @@ public class LoginFragment extends Fragment {
         bt_login = view.findViewById(R.id.login_bt_login);
         bt_signup = view.findViewById(R.id.login_bt_signup);
 
-        et_email.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                loginViewModel.onLoginIdTextChanged(editable.toString());
-            }
-        });
-
-        et_password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                loginViewModel.onLoginPasswordTextChanged(editable.toString());
-            }
-        });
-
+        //region observer
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
             public void onChanged(LoginFormState loginFormState) {
@@ -149,6 +116,42 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+        //endregion
+
+        //region Listener
+        et_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                loginViewModel.onLoginIdTextChanged(editable.toString());
+            }
+        });
+
+        et_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                loginViewModel.onLoginPasswordTextChanged(editable.toString());
+            }
+        });
 
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,9 +167,7 @@ public class LoginFragment extends Fragment {
 
             }
         });
-
-
-
+        //endregion
 
     }
 

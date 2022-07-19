@@ -1,4 +1,4 @@
-package com.example.numbergame.game.PlayGame;
+package com.example.numbergame.game.CompetitionGame;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +16,11 @@ import com.example.numbergame.game.GameButtonOnClickListener;
 
 import java.util.List;
 
-public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerViewAdapter.ViewHolder> {
-
+public class CompetitionGameRecyclerViewAdapter extends RecyclerView.Adapter<CompetitionGameRecyclerViewAdapter.ViewHolder> {
     private GameButtonOnClickListener gameButtonOnClickListener;
     private List<GameButtonContent> data;
 
-    public GameRecyclerViewAdapter(List<GameButtonContent> data, GameButtonOnClickListener gameButtonOnClickListener) {
+    public CompetitionGameRecyclerViewAdapter(List<GameButtonContent> data, GameButtonOnClickListener gameButtonOnClickListener) {
         this.data = data;
         this.gameButtonOnClickListener = gameButtonOnClickListener;
     }
@@ -32,9 +31,8 @@ public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CompetitionGameRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.gameButtonContent = data.get(position);
-
         if (holder.gameButtonContent.getButtonState() == GameButtonContent.ButtonState.ANIMATING) {
             Animation animation = AnimationUtils.loadAnimation(holder.bt_number.getContext(), com.example.numbergame.R.anim.buttonanim);
             animation.setAnimationListener(new Animation.AnimationListener() {

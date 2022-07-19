@@ -3,6 +3,7 @@ package com.example.numbergame.dataSource;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.numbergame.game.GameRecord;
 import com.example.numbergame.Result;
@@ -11,7 +12,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -146,5 +149,37 @@ public class FirebaseDataSource implements DataSource {
 
         db.collection("totalRecords")
                 .add(record);
+    }
+
+    @Override
+    public void addCompetitionRecord(GameRecord toAdd, DataSourceCallback<Result> callback) {
+        Map<String, Object> record = new HashMap<String, Object>();
+        record.put("timeStamp", toAdd.getTimestamp());
+        record.put("userId", toAdd.getUserId());
+        record.put("buttonNum", toAdd.getButtonNum());
+
+        db.collection("competitionRecords")
+                .add(record);
+    }
+
+    @Override
+    public void getCompetitionRecords(DataSourceCallback<Result> callback) {
+        db.collection("competitionRecords")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
+                            List<GameRecord> toReturn = new ArrayList<>();
+                            List<DocumentSnapshot> snaps = value.getDocuments();
+                            for (int i = 0; i < snaps.size(); i++) {
+                                GameRecord toAdd = new GameRecord((snaps.get(i).getLong("timeStamp")), snaps.get(i).getString("userId"), snaps.get(i).getLong("buttonNum").intValue());
+                                toReturn.add(toAdd);
+                            }
+                            callback.onComplete(new Result.Success<List<GameRecord>>(toReturn));
+                        } else {
+                            callback.onComplete(new Result.Error(new Exception("error")));
+                        }
+                    }
+                });
     }
 }

@@ -11,9 +11,7 @@ import com.example.numbergame.game.GameRecord;
 
 import java.util.List;
 
-
 public class MyRecordRecyclerViewAdapter extends RecyclerView.Adapter<MyRecordRecyclerViewAdapter.ViewHolder> {
-
     private List<GameRecord> recordList;
     private MyRecordViewModel myRecordViewModel;
 

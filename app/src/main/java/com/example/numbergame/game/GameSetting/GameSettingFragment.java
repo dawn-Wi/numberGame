@@ -40,28 +40,29 @@ import com.example.numbergame.databinding.FragmentGamesettingBinding;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class GameSettingFragment extends Fragment
-{
+public class GameSettingFragment extends Fragment {
     SharedPreferences sharedPreferences;
     String locale;
     int locale_number;
     ArrayList<String> locales;
     ArrayAdapter adapter;
+
     private FragmentGamesettingBinding binding;
     private GameSettingViewModel gameSettingViewModel;
+
     private Spinner sp_language;
     private TextView tv_maxNumber;
+    private TextView tv_orLabel;
     private EditText et_maxNumber;
     private Button bt_gameStart;
+    private Button bt_competition;
 
-    private  long pressedTime = 0;
+    private long pressedTime = 0;
 
-    public GameSettingFragment()
-    {
+    public GameSettingFragment() {
     }
 
-    public static GameSettingFragment newInstance()
-    {
+    public static GameSettingFragment newInstance() {
         GameSettingFragment fragment = new GameSettingFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -69,8 +70,7 @@ public class GameSettingFragment extends Fragment
     }
 
     @NonNull
-    public static String getStringByLocal(Activity context, int resId, String locale)
-    {
+    public static String getStringByLocal(Activity context, int resId, String locale) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
             return getStringByLocalPlus17(context, resId, locale);
         else
@@ -79,15 +79,13 @@ public class GameSettingFragment extends Fragment
 
     @NonNull
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private static String getStringByLocalPlus17(Activity context, int resId, String locale)
-    {
+    private static String getStringByLocalPlus17(Activity context, int resId, String locale) {
         Configuration configuration = new Configuration(context.getResources().getConfiguration());
         configuration.setLocale(new Locale(locale));
         return context.createConfigurationContext(configuration).getResources().getString(resId);
     }
 
-    private static String getStringByLocalBefore17(Context context, int resId, String language)
-    {
+    private static String getStringByLocalBefore17(Context context, int resId, String language) {
         Resources currentResources = context.getResources();
         AssetManager assets = currentResources.getAssets();
         DisplayMetrics metrics = currentResources.getDisplayMetrics();
@@ -103,18 +101,17 @@ public class GameSettingFragment extends Fragment
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameSettingViewModel = new ViewModelProvider(requireActivity()).get(GameSettingViewModel.class);
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if(System.currentTimeMillis()>pressedTime+2000){
+                if (System.currentTimeMillis() > pressedTime + 2000) {
                     pressedTime = System.currentTimeMillis();
-                    Toast.makeText(requireContext(),"Press once more to exit",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(requireContext(),"Exit the app",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Press once more to exit", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Exit the app", Toast.LENGTH_SHORT).show();
                     requireActivity().finish();
                 }
             }
@@ -123,44 +120,38 @@ public class GameSettingFragment extends Fragment
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState)
-    {
+                             ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentGamesettingBinding.inflate(inflater, container, false);
+        sp_language = binding.gameSettingSpLanguage;
+        tv_maxNumber = binding.gameSettingTvMaxNumberLabel;
+        et_maxNumber = binding.gameSettingEtMaxNumber;
+        tv_orLabel = binding.gamesettingTvOrLabel;
+        bt_gameStart = binding.gameSettingBtGameStart;
+        bt_competition = binding.gamesettingBtCompetitionButton;
         View root = binding.getRoot();
 
         return root;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle saveInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle saveInstanceState) {
         super.onViewCreated(view, saveInstanceState);
-        sp_language = binding.gameSettingSpLanguage;
-        tv_maxNumber = binding.gameSettingTvMaxNumberLabel;
-        et_maxNumber = binding.gameSettingEtMaxNumber;
-        bt_gameStart = binding.gameSettingBtGameStart;
 
+        //region spinner
         sharedPreferences = requireActivity().getSharedPreferences("shared", MODE_PRIVATE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             locale = sharedPreferences.getString("locale", getResources().getConfiguration().getLocales().get(0).getLanguage());
-        }
-        else
-        {
+        } else {
             locale = sharedPreferences.getString("locale", Resources.getSystem().getConfiguration().locale.getLanguage());
         }
 
-        switch (locale)
-        {
-            case "ko":
-            {
+        switch (locale) {
+            case "ko": {
                 locale_number = 0;
                 break;
             }
-            case "en":
-            {
+            case "en": {
                 locale_number = 1;
                 break;
             }
@@ -177,22 +168,16 @@ public class GameSettingFragment extends Fragment
         sp_language.setAdapter(adapter);
         sp_language.setSelection(locale_number);
 
-        sp_language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        sp_language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
-            {
-                if (position != locale_number)
-                {
-                    switch (position)
-                    {
-                        case 0:
-                        {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                if (position != locale_number) {
+                    switch (position) {
+                        case 0: {
                             locale = "ko";
                             break;
                         }
-                        case 1:
-                        {
+                        case 1: {
                             locale = "en";
                             break;
                         }
@@ -212,40 +197,17 @@ public class GameSettingFragment extends Fragment
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
+            public void onNothingSelected(AdapterView<?> adapterView) {
                 sp_language.setSelection(locale_number);
             }
         });
+        //endregion
 
-        et_maxNumber.addTextChangedListener(new TextWatcher()
-        {
+        //region viewModel
+        gameSettingViewModel.getGameSettingFormState().observe(getViewLifecycleOwner(), new Observer<GameSettingFormState>() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
-            {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable)
-            {
-                gameSettingViewModel.onMaxNumberTextChanged(editable.toString());
-            }
-        });
-
-        gameSettingViewModel.getGameSettingFormState().observe(getViewLifecycleOwner(), new Observer<GameSettingFormState>()
-        {
-            @Override
-            public void onChanged(GameSettingFormState gameSettingFormState)
-            {
-                if (gameSettingFormState.getMaxNumberErrorMessage() != null)
-                {
+            public void onChanged(GameSettingFormState gameSettingFormState) {
+                if (gameSettingFormState.getMaxNumberErrorMessage() != null) {
                     et_maxNumber.setError(gameSettingFormState.getMaxNumberErrorMessage());
                 }
 
@@ -253,18 +215,45 @@ public class GameSettingFragment extends Fragment
                 bt_gameStart.setEnabled(gameSettingFormState.isFieldsValid());
             }
         });
+        //endregion
 
-        bt_gameStart.setOnClickListener(new View.OnClickListener()
-        {
+        //region Listener
+        et_maxNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view)
-            {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                gameSettingViewModel.onMaxNumberTextChanged(editable.toString());
+            }
+        });
+
+        bt_gameStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 GameSettingFragmentDirections.ActionNavigationGameSettingToGameFragment action = GameSettingFragmentDirections.actionNavigationGameSettingToGameFragment();
                 action.setMaxNumber(gameSettingViewModel.getMaxNumber());
                 NavHostFragment.findNavController(GameSettingFragment.this).navigate(action);
             }
         });
 
+        bt_competition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GameSettingFragmentDirections.ActionNavigationGameSettingToCompetitionGameFragment action = GameSettingFragmentDirections.actionNavigationGameSettingToCompetitionGameFragment();
+                action.setMaxNumber(25);
+                NavHostFragment.findNavController(GameSettingFragment.this).navigate(action);
+            }
+        });
+
+        //endregion
     }
 
 }

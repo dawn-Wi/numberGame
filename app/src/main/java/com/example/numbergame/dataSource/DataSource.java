@@ -15,4 +15,8 @@ public interface DataSource {
     void getMyRecords(String id, DataSourceCallback<Result> callback);
 
     void addRecord(GameRecord toAdd, DataSourceCallback<Result> callback);
+
+    void addCompetitionRecord(GameRecord toAdd, DataSourceCallback<Result> callback);
+
+    void getCompetitionRecords(DataSourceCallback<Result> callback);
 }

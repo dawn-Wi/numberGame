@@ -37,6 +37,14 @@ public class UserRepository {
         dataSource.addRecord(gameRecord, callback::onComplete);
     }
 
+    public void addCompetitionRecord(final GameRecord gameRecord, UserRepositoryCallback<Result> callback){
+        dataSource.addCompetitionRecord(gameRecord, callback::onComplete);
+    }
+
+    public void getCompetitionRecords(final UserRepositoryCallback callback){
+        dataSource.getCompetitionRecords(callback::onComplete);
+    }
+
     public void getMyRecord(final UserRepositoryCallback callback) {
         dataSource.getMyRecords(loggedInUserId, callback::onComplete);
     }

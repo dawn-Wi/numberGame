@@ -1,4 +1,4 @@
-package com.example.numbergame.game.PlayGame;
+package com.example.numbergame.game.CompetitionGame;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,12 +8,13 @@ import com.example.numbergame.Result;
 import com.example.numbergame.UserRepository;
 import com.example.numbergame.game.GameButtonContent;
 import com.example.numbergame.game.GameRecord;
+import com.example.numbergame.game.PlayGame.GameViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GameViewModel extends ViewModel {
+public class CompetitionGameViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
 
     private MutableLiveData<Boolean> pressedButtonCorrect = new MutableLiveData<>(false);
@@ -35,8 +36,8 @@ public class GameViewModel extends ViewModel {
         }
     }
 
-    public void addRecord(GameRecord gameRecord) {
-        userRepository.addRecord(gameRecord, result -> {
+    public void addCompetitionRecord(GameRecord gameRecord) {
+        userRepository.addCompetitionRecord(gameRecord, result -> {
             if (result instanceof Result.Success) {
 
             }
