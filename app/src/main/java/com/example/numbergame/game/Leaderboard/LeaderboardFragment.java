@@ -43,6 +43,9 @@ public class LeaderboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLeaderboardBinding.inflate(inflater, container, false);
         cl_layout = binding.leaderboardClLayout;
+        tv_rankLabel = binding.leaderboardTvRankLabel;
+        tv_nameLabel= binding.leaderboardTvNameLabel;
+        tv_timeLabel = binding.leaderboardTvTimeLabel;
 
         init();
 
@@ -53,10 +56,6 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        tv_rankLabel = view.findViewById(R.id.leaderboard_tv_rankLabel);
-        tv_nameLabel = view.findViewById(R.id.leaderboard_tv_nameLabel);
-        tv_timeLabel = view.findViewById(R.id.leaderboard_tv_timeLabel);
     }
 
     private void init() {

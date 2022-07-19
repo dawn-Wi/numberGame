@@ -31,7 +31,7 @@ public class LeaderboardRecyclerViewAdapter extends RecyclerView.Adapter<Leaderb
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.rank.setText(String.valueOf(position + 1));
         holder.userId.setText(recordList.get(position).getUserId());
-        holder.buttonNumAndRecord.setText("ButtonNum: " + recordList.get(position).getButtonNum() + " / Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
+        holder.buttonNumAndRecord.setText( "Time: " + Math.toIntExact(Long.parseLong("" + recordList.get(position).getTimestamp())));
     }
 
 

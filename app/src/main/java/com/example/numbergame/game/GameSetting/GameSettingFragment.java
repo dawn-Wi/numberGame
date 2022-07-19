@@ -209,7 +209,6 @@ public class GameSettingFragment extends Fragment {
 
                 gameSettingViewModel.setMaxNumberText(et_maxNumber.getText().toString());
                 bt_gameStart.setEnabled(gameSettingFormState.isFieldsValid());
-                bt_competition.setEnabled(gameSettingFormState.isFieldsValid());
             }
         });
         //endregion
@@ -245,7 +244,7 @@ public class GameSettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 GameSettingFragmentDirections.ActionNavigationGameSettingToCompetitionGameFragment action = GameSettingFragmentDirections.actionNavigationGameSettingToCompetitionGameFragment();
-                action.setMaxNumber(gameSettingViewModel.getMaxNumber());
+                action.setMaxNumber(25);
                 NavHostFragment.findNavController(GameSettingFragment.this).navigate(action);
             }
         });
